@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Telemed Dashboard</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="./public/css/dashboard.css" />
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ["Plus Jakarta Sans", "sans-serif"]
+          },
+          colors: {
+            ink: "#0f172a",
+            mist: "#f8fafc"
+          },
+          boxShadow: {
+            soft: "0 8px 30px rgba(15, 23, 42, 0.06)"
+          }
+        }
+      }
+    };
+  </script>
+</head>
+<body class="bg-slate-100 text-slate-800" data-page="settings">
+  <div class="fixed inset-0 -z-10 bg-[radial-gradient(circle_at_15%_20%,rgba(14,165,233,0.18),transparent_35%),radial-gradient(circle_at_80%_0%,rgba(59,130,246,0.14),transparent_28%),linear-gradient(180deg,#f8fafc,#eef2ff_45%,#f8fafc)]"></div>
+
+  <div id="overlay" class="fixed inset-0 z-30 hidden bg-slate-950/45 lg:hidden" onclick="closeSidebar()"></div>
+
+  <aside id="sidebar" class="fixed left-0 top-0 z-40 flex h-screen w-64 -translate-x-full flex-col border-r border-slate-800 bg-slate-950/95 text-slate-300 backdrop-blur transition-transform duration-300 lg:translate-x-0">
+    <div class="flex items-center gap-3 px-5 py-5">
+      <div class="grid h-9 w-9 place-items-center rounded-xl bg-sky-500 text-white shadow-lg shadow-sky-500/30">
+        <i class="bi bi-heart-pulse-fill text-sm"></i>
+      </div>
+      <div class="text-sm font-bold tracking-wide text-white">Telemed</div>
+      <button onclick="closeSidebar()" class="ml-auto text-slate-400 hover:text-white lg:hidden">
+        <i class="bi bi-x-lg"></i>
+      </button>
+    </div>
+
+    <nav class="space-y-1 px-3 text-sm">
+      <button class="nav-item"><i class="bi bi-bar-chart"></i><span>Dashboard</span></button>
+      <button class="nav-item"><i class="bi bi-calendar3"></i><span>Appointments</span></button>
+      <button class="nav-item"><i class="bi bi-people"></i><span>Patients</span></button>
+      <button class="nav-item"><i class="bi bi-file-earmark-medical"></i><span>Prescriptions</span></button>
+      <button class="nav-item"><i class="bi bi-chat-left-text"></i><span>Messages</span></button>
+      <button class="nav-item"><i class="bi bi-camera-video"></i><span>Video Consultation</span></button>
+      <button class="nav-item"><i class="bi bi-graph-up"></i><span>Reports</span></button>
+      <button class="nav-item"><i class="bi bi-capsule"></i><span>Drug Database</span></button>
+      <button class="nav-item nav-active"><i class="bi bi-gear"></i><span>Settings</span></button>
+      <button class="nav-item">
+        <i class="bi bi-bell"></i>
+        <span>Notifications</span>
+        <span class="ml-auto rounded-full bg-rose-500 px-2 py-0.5 text-[10px] font-semibold text-white">5</span>
+      </button>
+    </nav>
+  </aside>
+
+  <main class="min-h-screen lg:ml-64">
+    <header class="sticky top-0 z-20 border-b border-slate-200/70 bg-white/80 backdrop-blur">
+      <div class="flex h-16 items-center gap-3 px-4 sm:px-6">
+        <button onclick="openSidebar()" class="grid h-9 w-9 place-items-center rounded-lg border border-slate-200 text-slate-600 lg:hidden">
+          <i class="bi bi-list"></i>
+        </button>
+
+        <div class="flex items-center gap-2 text-sm font-semibold text-slate-700">
+          <i class="bi bi-gear text-sky-600"></i>
+          <span>Settings</span>
+        </div>
+
+        <label class="ml-auto hidden items-center gap-2 rounded-xl border border-slate-200 bg-slate-50 px-3 py-2 text-xs text-slate-500 sm:flex">
+          <i class="bi bi-search"></i>
+          <input type="text" placeholder="Search patients, appointments..." class="w-56 bg-transparent outline-none placeholder:text-slate-400" />
+        </label>
+
+        <button class="relative text-slate-500">
+          <i class="bi bi-bell"></i>
+          <span class="absolute -right-1 -top-1 grid h-4 w-4 place-items-center rounded-full bg-rose-500 text-[10px] text-white">5</span>
+        </button>
+
+        <div class="grid h-9 w-9 place-items-center rounded-full bg-sky-600 text-xs font-bold text-white">DR</div>
+      </div>
+    </header>
+
+    <section class="p-4 sm:p-6">
+      <div class="mb-4">
+        <h1 class="text-2xl font-extrabold tracking-tight text-ink">Settings</h1>
+        <p class="text-sm text-slate-500">Manage your account settings and preferences</p>
+      </div>
+
+      <div class="rounded-2xl border border-slate-200 bg-white/90 p-2 shadow-soft backdrop-blur">
+        <div class="grid grid-cols-2 gap-1 rounded-xl bg-slate-100 p-1 text-xs font-semibold text-slate-500 sm:grid-cols-5" id="tabs">
+          <button class="tab-btn rounded-lg px-3 py-2" data-tab="profile">Profile</button>
+          <button class="tab-btn rounded-lg px-3 py-2 tab-active" data-tab="notifications">Notifications</button>
+          <button class="tab-btn rounded-lg px-3 py-2" data-tab="preferences">Preferences</button>
+          <button class="tab-btn rounded-lg px-3 py-2" data-tab="security">Security</button>
+          <button class="tab-btn rounded-lg px-3 py-2" data-tab="billing">Billing</button>
+        </div>
+
+        <div class="mt-3 rounded-xl border border-slate-200 p-4 sm:p-5">
+          <div class="tab-panel hidden" id="panel-profile">
+            <h2 class="mb-1 text-base font-bold text-slate-800">Profile Settings</h2>
+            <p class="mb-4 text-sm text-slate-500">Update your doctor profile and personal information</p>
+            <div class="grid gap-4 sm:grid-cols-2">
+              <label class="text-sm">Full Name
+                <input id="fullName" name="full_name" class="mt-1 w-full rounded-xl border border-slate-200 px-3 py-2 outline-none focus:border-sky-500" value="Dr. Sarah Ahmed" />
+              </label>
+              <label class="text-sm">Email
+                <input id="email" name="email" class="mt-1 w-full rounded-xl border border-slate-200 px-3 py-2 outline-none focus:border-sky-500" value="dr.sarah@telemed.com" />
+              </label>
+            </div>
+          </div>
+
+          <div class="tab-panel" id="panel-notifications">
+            <h2 class="mb-1 flex items-center gap-2 text-base font-bold text-slate-800"><i class="bi bi-bell"></i> Notification Preferences</h2>
+            <p class="mb-4 text-sm text-slate-500">Choose how you want to be notified</p>
+
+            <div class="space-y-4" id="notificationList">
+              <div class="row-item">
+                <div>
+                  <h3 class="text-sm font-semibold text-slate-700">Email Notifications</h3>
+                  <p class="text-xs text-slate-500">Receive appointment confirmations via email</p>
+                </div>
+                <button class="switch on" data-setting="email_notifications" aria-label="Email Notifications" onclick="toggleSwitch(this)"></button>
+              </div>
+
+              <div class="row-item">
+                <div>
+                  <h3 class="text-sm font-semibold text-slate-700">SMS Reminders</h3>
+                  <p class="text-xs text-slate-500">Get text message reminders for appointments</p>
+                </div>
+                <button class="switch on" data-setting="sms_reminders" aria-label="SMS Reminders" onclick="toggleSwitch(this)"></button>
+              </div>
+
+              <div class="row-item">
+                <div>
+                  <h3 class="text-sm font-semibold text-slate-700">Push Notifications</h3>
+                  <p class="text-xs text-slate-500">Receive push notifications on your device</p>
+                </div>
+                <button class="switch on" data-setting="push_notifications" aria-label="Push Notifications" onclick="toggleSwitch(this)"></button>
+              </div>
+
+              <div class="row-item">
+                <div>
+                  <h3 class="text-sm font-semibold text-slate-700">Marketing Emails</h3>
+                  <p class="text-xs text-slate-500">Receive updates about new features and offers</p>
+                </div>
+                <button class="switch" data-setting="marketing_emails" aria-label="Marketing Emails" onclick="toggleSwitch(this)"></button>
+              </div>
+
+              <div class="row-item">
+                <div>
+                  <h3 class="text-sm font-semibold text-slate-700">Security Alerts</h3>
+                  <p class="text-xs text-slate-500">Important security notifications</p>
+                </div>
+                <button class="switch on" data-setting="security_alerts" aria-label="Security Alerts" onclick="toggleSwitch(this)"></button>
+              </div>
+
+              <div class="row-item">
+                <div>
+                  <h3 class="text-sm font-semibold text-slate-700">System Updates</h3>
+                  <p class="text-xs text-slate-500">Notifications about system maintenance and updates</p>
+                </div>
+                <button class="switch on" data-setting="system_updates" aria-label="System Updates" onclick="toggleSwitch(this)"></button>
+              </div>
+            </div>
+
+            <div class="mt-5 flex justify-end">
+              <button id="savePreferences" onclick="showToast('Preferences saved successfully')" class="inline-flex items-center gap-2 rounded-xl bg-sky-600 px-4 py-2 text-sm font-semibold text-white transition hover:bg-sky-700">
+                <i class="bi bi-floppy"></i>
+                Save Preferences
+              </button>
+            </div>
+          </div>
+
+          <div class="tab-panel hidden" id="panel-preferences">
+            <h2 class="mb-1 text-base font-bold text-slate-800">Preferences</h2>
+            <p class="mb-4 text-sm text-slate-500">Set language, timezone, and interface behavior</p>
+            <div class="grid gap-4 sm:grid-cols-2">
+              <label class="text-sm">Language
+                <select id="language" name="language" class="mt-1 w-full rounded-xl border border-slate-200 px-3 py-2 outline-none focus:border-sky-500">
+                  <option>English</option>
+                  <option>Arabic</option>
+                </select>
+              </label>
+              <label class="text-sm">Timezone
+                <select id="timezone" name="timezone" class="mt-1 w-full rounded-xl border border-slate-200 px-3 py-2 outline-none focus:border-sky-500">
+                  <option>(GMT+02:00) Cairo</option>
+                  <option>(GMT+03:00) Riyadh</option>
+                </select>
+              </label>
+            </div>
+          </div>
+
+          <div class="tab-panel hidden" id="panel-security">
+            <h2 class="mb-1 flex items-center gap-2 text-base font-bold text-slate-800"><i class="bi bi-shield-lock"></i> Security Settings</h2>
+            <p class="mb-4 text-sm text-slate-500">Manage your account security and privacy</p>
+
+            <div class="space-y-3">
+              <div class="rounded-xl border border-slate-200 p-4">
+                <h3 class="font-semibold">Password</h3>
+                <p class="text-xs text-slate-500">Last changed 30 days ago</p>
+                <button class="mt-3 rounded-lg border border-slate-300 px-3 py-1.5 text-xs font-semibold">Change Password</button>
+              </div>
+
+              <div class="rounded-xl border border-slate-200 p-4">
+                <h3 class="font-semibold">Two-Factor Authentication</h3>
+                <p class="text-xs text-slate-500">Add an extra layer of security to your account</p>
+                <div class="mt-3 flex gap-2">
+                  <span class="rounded-md bg-slate-100 px-2 py-1 text-xs">Not Enabled</span>
+                  <button class="rounded-lg border border-slate-300 px-3 py-1.5 text-xs font-semibold">Enable 2FA</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="tab-panel hidden" id="panel-billing">
+            <h2 class="mb-1 text-base font-bold text-slate-800">Billing</h2>
+            <p class="mb-4 text-sm text-slate-500">Manage your subscription and payment details</p>
+            <div class="rounded-xl border border-slate-200 p-4 text-sm text-slate-600">
+              Current plan: <span class="font-semibold text-slate-800">Professional</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div id="toast" class="pointer-events-none fixed bottom-5 right-5 translate-y-10 rounded-xl bg-emerald-600 px-4 py-2 text-sm font-semibold text-white opacity-0 shadow-lg transition-all duration-300">Saved</div>
+
+  <script src="./public/js/settings.js"></script>
+</body>
+</html>

@@ -20,6 +20,72 @@ function toggleSwitch(element) {
   element.classList.toggle("on");
 }
 
+function togglePasswordForm() {
+  const form = document.getElementById("passwordForm");
+  if (!form) return;
+
+  form.classList.toggle("hidden");
+}
+
+function clearPasswordForm() {
+  const currentPassword = document.getElementById("currentPassword");
+  const newPassword = document.getElementById("newPassword");
+  const confirmPassword = document.getElementById("confirmPassword");
+
+  if (currentPassword) currentPassword.value = "";
+  if (newPassword) newPassword.value = "";
+  if (confirmPassword) confirmPassword.value = "";
+}
+
+function cancelPasswordForm() {
+  const form = document.getElementById("passwordForm");
+  if (!form) return;
+
+  clearPasswordForm();
+  form.classList.add("hidden");
+}
+
+function saveProfile() {
+  const payload = getSettingsPayload();
+  showToast("Profile saved successfully");
+  return payload;
+}
+
+function savePassword() {
+  const currentPassword = document.getElementById("currentPassword");
+  const newPassword = document.getElementById("newPassword");
+  const confirmPassword = document.getElementById("confirmPassword");
+
+  const currentValue = currentPassword ? currentPassword.value.trim() : "";
+  const newValue = newPassword ? newPassword.value.trim() : "";
+  const confirmValue = confirmPassword ? confirmPassword.value.trim() : "";
+
+  if (!currentValue || !newValue || !confirmValue) {
+    showToast("Please fill all password fields", "error");
+    return null;
+  }
+
+  if (newValue.length < 8) {
+    showToast("New password must be at least 8 characters", "error");
+    return null;
+  }
+
+  if (newValue !== confirmValue) {
+    showToast("Password confirmation does not match", "error");
+    return null;
+  }
+
+  clearPasswordForm();
+  document.getElementById("passwordForm").classList.add("hidden");
+  showToast("Password updated successfully");
+
+  return {
+    current_password: currentValue,
+    password: newValue,
+    password_confirmation: confirmValue
+  };
+}
+
 function getNotificationSettings() {
   const toggles = document.querySelectorAll("[data-setting]");
   const result = {};
@@ -72,11 +138,23 @@ function hydrateSettings(payload) {
   }
 }
 
-function showToast(message) {
+function showToast(message, type) {
   const toast = document.getElementById("toast");
   if (!toast) return;
 
+  const tone = type || "success";
+
   toast.textContent = message;
+  toast.classList.remove("bg-emerald-600", "bg-rose-600", "bg-amber-500");
+
+  if (tone === "error") {
+    toast.classList.add("bg-rose-600");
+  } else if (tone === "warning") {
+    toast.classList.add("bg-amber-500");
+  } else {
+    toast.classList.add("bg-emerald-600");
+  }
+
   toast.classList.remove("opacity-0", "translate-y-10");
   toast.classList.add("opacity-100", "translate-y-0");
 
@@ -111,5 +189,8 @@ function showToast(message) {
 window.SettingsPage = {
   getPayload: getSettingsPayload,
   hydrate: hydrateSettings,
-  getNotificationSettings: getNotificationSettings
+  getNotificationSettings: getNotificationSettings,
+  saveProfile: saveProfile,
+  savePassword: savePassword,
+  cancelPasswordForm: cancelPasswordForm
 };

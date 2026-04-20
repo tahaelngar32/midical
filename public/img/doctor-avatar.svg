@@ -1,0 +1,59 @@
+<svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="70" y1="32" x2="420" y2="490" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#F8FCFF"/>
+      <stop offset="0.54" stop-color="#E3F0FF"/>
+      <stop offset="1" stop-color="#C7DCF8"/>
+    </linearGradient>
+    <linearGradient id="coat" x1="256" y1="266" x2="256" y2="470" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FFFFFF"/>
+      <stop offset="1" stop-color="#E7EDF7"/>
+    </linearGradient>
+    <linearGradient id="shirt" x1="256" y1="298" x2="256" y2="418" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#7DB0E5"/>
+      <stop offset="1" stop-color="#4B84C2"/>
+    </linearGradient>
+    <linearGradient id="skin" x1="221" y1="124" x2="296" y2="260" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FFD8BF"/>
+      <stop offset="1" stop-color="#F4BC96"/>
+    </linearGradient>
+    <linearGradient id="hair" x1="196" y1="78" x2="320" y2="178" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#3A4F68"/>
+      <stop offset="1" stop-color="#22364C"/>
+    </linearGradient>
+    <filter id="soft" x="0" y="0" width="512" height="512" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+      <feDropShadow dx="0" dy="16" stdDeviation="14" flood-color="#2A4768" flood-opacity="0.22"/>
+    </filter>
+  </defs>
+
+  <g filter="url(#soft)">
+    <rect x="32" y="32" width="448" height="448" rx="132" fill="url(#bg)"/>
+  </g>
+
+  <ellipse cx="256" cy="418" rx="124" ry="30" fill="#AFC8E5" fill-opacity="0.45"/>
+
+  <path d="M168 470V356C168 323.8 194.8 298 227 298H285C317.2 298 344 323.8 344 356V470H168Z" fill="url(#shirt)"/>
+
+  <path d="M116 470V362C116 310.1 158.1 268 210 268H302C353.9 268 396 310.1 396 362V470H116Z" fill="url(#coat)"/>
+
+  <path d="M220 288H292V330C292 349.9 275.9 366 256 366C236.1 366 220 349.9 220 330V288Z" fill="url(#skin)"/>
+
+  <circle cx="256" cy="194" r="90" fill="url(#skin)"/>
+
+  <path d="M170 190C170 138.1 212.1 96 264 96C303.8 96 337.8 120.8 351.3 155.9C349.6 154.3 347.6 152.9 345.3 151.8C331.8 145.2 315.1 147.2 301.2 153.2C282.6 161.2 266.8 175.9 246.7 180.1C222.4 185.2 196.8 173.1 176.9 158.7C172.5 167.9 170 178.3 170 189.3V190Z" fill="url(#hair)"/>
+
+  <ellipse cx="224" cy="198" rx="8" ry="10" fill="#2A3E56"/>
+  <ellipse cx="288" cy="198" rx="8" ry="10" fill="#2A3E56"/>
+  <path d="M228 238C236 245.3 245.8 249 256 249C266.2 249 276 245.3 284 238" stroke="#A36E53" stroke-width="6" stroke-linecap="round"/>
+
+  <path d="M255 302L238 332H274L255 302Z" fill="#D8E5F5"/>
+
+  <g>
+    <circle cx="345" cy="357" r="26" fill="#F5FAFF" stroke="#AFC5DF" stroke-width="6"/>
+    <path d="M345 344V370" stroke="#5D88B9" stroke-width="6" stroke-linecap="round"/>
+    <path d="M332 357H358" stroke="#5D88B9" stroke-width="6" stroke-linecap="round"/>
+    <path d="M326 383L304 406" stroke="#AFC5DF" stroke-width="8" stroke-linecap="round"/>
+  </g>
+
+  <rect x="74" y="74" width="364" height="108" rx="54" fill="white" fill-opacity="0.34"/>
+</svg>

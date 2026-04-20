@@ -92,6 +92,32 @@
           default => 'status-pending',
       };
       $statusLabel = ucfirst($prescription->status);
+      $viewPayload = [
+          'id' => $prescription->id,
+          'patient' => $fullName ?: 'Unknown Patient',
+          'status' => ucfirst($prescription->status),
+          'medication' => $prescription->medication,
+          'dosage' => $prescription->dosage,
+          'frequency' => $prescription->frequency,
+          'duration' => $prescription->duration,
+          'quantity' => $prescription->quantity,
+          'refills' => $prescription->refills,
+          'instructions' => $prescription->instructions,
+          'prescribed_at' => optional($prescription->prescribed_at)->format('Y-m-d'),
+          'expires_at' => optional($prescription->expires_at)->format('Y-m-d'),
+      ];
+      $editPayload = [
+          'id' => $prescription->id,
+          'patient_id' => $prescription->patient_id,
+          'medication' => $prescription->medication,
+          'dosage' => $prescription->dosage,
+          'frequency' => $prescription->frequency,
+          'duration' => $prescription->duration,
+          'quantity' => $prescription->quantity,
+          'refills' => (string) $prescription->refills,
+          'status' => $prescription->status,
+          'instructions' => $prescription->instructions,
+      ];
     @endphp
 
     <article class="manage-row">
@@ -128,13 +154,42 @@
       </div>
 
       <div class="manage-actions">
-        <button class="icon-btn" type="button" onclick="showToast('View details')">
+        @if ($prescription->status === 'pending')
+          <form method="POST" action="{{ route('prescriptions.status', $prescription->id) }}">
+            @csrf
+            @method('PATCH')
+            <input type="hidden" name="status" value="filled" />
+            <button class="action-pill" type="submit">
+              <i class="bi bi-send"></i> Fill
+            </button>
+          </form>
+
+          <form method="POST" action="{{ route('prescriptions.status', $prescription->id) }}">
+            @csrf
+            @method('PATCH')
+            <input type="hidden" name="status" value="cancelled" />
+            <button class="icon-btn danger" type="submit" title="Cancel prescription">
+              <i class="bi bi-x-circle"></i>
+            </button>
+          </form>
+        @else
+          <form method="POST" action="{{ route('prescriptions.status', $prescription->id) }}">
+            @csrf
+            @method('PATCH')
+            <input type="hidden" name="status" value="pending" />
+            <button class="action-pill" type="submit">
+              <i class="bi bi-arrow-counterclockwise"></i> Reopen
+            </button>
+          </form>
+        @endif
+
+        <button class="icon-btn" type="button" onclick='openViewPrescriptionModal(@json($viewPayload))'>
           <i class="bi bi-eye"></i>
         </button>
-        <button class="icon-btn" type="button" onclick="showToast('Download started')">
+        <a class="icon-btn" href="{{ route('prescriptions.download', $prescription->id) }}" title="Download prescription">
           <i class="bi bi-download"></i>
-        </button>
-        <button class="icon-btn" type="button" onclick="showToast('Edit will be available soon')">
+        </a>
+        <button class="icon-btn" type="button" onclick='openEditPrescriptionModal(@json($editPayload))'>
           <i class="bi bi-pencil-square"></i>
         </button>
         <form method="POST" action="{{ route('prescriptions.destroy', $prescription->id) }}" onsubmit="return confirm('Delete this prescription?')">
@@ -237,6 +292,119 @@
   </div>
 </div>
 
+<div id="viewPrescriptionModal" class="modal-backdrop hidden-view" onclick="closeViewPrescriptionModal(event)">
+  <div class="modal-panel prescription-modal-panel" role="dialog" aria-modal="true" aria-labelledby="viewPrescriptionTitle">
+    <div class="modal-head">
+      <div>
+        <h3 id="viewPrescriptionTitle">Prescription Details</h3>
+        <p>Review prescription information</p>
+      </div>
+      <button class="modal-close-btn" type="button" onclick="closeViewPrescriptionModal()" aria-label="Close">
+        <i class="bi bi-x-lg"></i>
+      </button>
+    </div>
+
+    <div class="prescription-details-grid">
+      <div><h4>Patient</h4><p id="viewPrescriptionPatient">-</p></div>
+      <div><h4>Status</h4><p id="viewPrescriptionStatus">-</p></div>
+      <div><h4>Medication</h4><p id="viewPrescriptionMedication">-</p></div>
+      <div><h4>Dosage</h4><p id="viewPrescriptionDosage">-</p></div>
+      <div><h4>Frequency</h4><p id="viewPrescriptionFrequency">-</p></div>
+      <div><h4>Duration</h4><p id="viewPrescriptionDuration">-</p></div>
+      <div><h4>Quantity</h4><p id="viewPrescriptionQuantity">-</p></div>
+      <div><h4>Refills</h4><p id="viewPrescriptionRefills">-</p></div>
+      <div><h4>Prescribed Date</h4><p id="viewPrescriptionPrescribed">-</p></div>
+      <div><h4>Expires Date</h4><p id="viewPrescriptionExpires">-</p></div>
+      <div class="view-full"><h4>Instructions</h4><p id="viewPrescriptionInstructions">-</p></div>
+    </div>
+  </div>
+</div>
+
+<div id="editPrescriptionModal" class="modal-backdrop hidden-view" onclick="closeEditPrescriptionModal(event)">
+  <div class="modal-panel prescription-modal-panel" role="dialog" aria-modal="true" aria-labelledby="editPrescriptionTitle">
+    <div class="modal-head">
+      <div>
+        <h3 id="editPrescriptionTitle">Edit Prescription</h3>
+        <p>Update prescription details and status</p>
+      </div>
+      <button class="modal-close-btn" type="button" onclick="closeEditPrescriptionModal()" aria-label="Close">
+        <i class="bi bi-x-lg"></i>
+      </button>
+    </div>
+
+    <form id="editPrescriptionForm" method="POST" action="" class="patient-form-grid">
+      @csrf
+      @method('PATCH')
+
+      <label class="form-field form-full">
+        <span>Patient</span>
+        <select id="editPrescriptionPatient" name="patient_id" required>
+          <option value="">Select patient</option>
+          @foreach ($patients as $patient)
+            <option value="{{ $patient->id }}">{{ $patient->first_name }} {{ $patient->last_name }}</option>
+          @endforeach
+        </select>
+      </label>
+
+      <label class="form-field">
+        <span>Medication</span>
+        <input id="editPrescriptionMedication" type="text" name="medication" required />
+      </label>
+
+      <label class="form-field">
+        <span>Dosage</span>
+        <input id="editPrescriptionDosage" type="text" name="dosage" />
+      </label>
+
+      <label class="form-field">
+        <span>Frequency</span>
+        <input id="editPrescriptionFrequency" type="text" name="frequency" />
+      </label>
+
+      <label class="form-field">
+        <span>Duration</span>
+        <input id="editPrescriptionDuration" type="text" name="duration" />
+      </label>
+
+      <label class="form-field">
+        <span>Quantity</span>
+        <input id="editPrescriptionQuantity" type="text" name="quantity" />
+      </label>
+
+      <label class="form-field">
+        <span>Refills</span>
+        <select id="editPrescriptionRefills" name="refills">
+          <option value="0">0</option>
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+          <option value="5">5</option>
+        </select>
+      </label>
+
+      <label class="form-field">
+        <span>Status</span>
+        <select id="editPrescriptionStatus" name="status" required>
+          <option value="pending">Pending</option>
+          <option value="filled">Filled</option>
+          <option value="cancelled">Cancelled</option>
+        </select>
+      </label>
+
+      <label class="form-field form-full">
+        <span>Special Instructions</span>
+        <textarea id="editPrescriptionInstructions" class="prescription-textarea" name="instructions"></textarea>
+      </label>
+
+      <div class="modal-actions form-full">
+        <button class="modal-secondary-btn" type="button" onclick="closeEditPrescriptionModal()">Cancel</button>
+        <button class="modal-primary-btn" type="submit">Save Changes</button>
+      </div>
+    </form>
+  </div>
+</div>
+
 <script>
 function openPrescriptionModal() {
   document.getElementById('prescriptionModal').classList.remove('hidden-view');
@@ -245,6 +413,48 @@ function openPrescriptionModal() {
 function closePrescriptionModal(event) {
   if (event && event.target !== document.getElementById('prescriptionModal')) return;
   document.getElementById('prescriptionModal').classList.add('hidden-view');
+}
+
+function openViewPrescriptionModal(data) {
+  document.getElementById('viewPrescriptionPatient').textContent = data.patient || '-';
+  document.getElementById('viewPrescriptionStatus').textContent = data.status || '-';
+  document.getElementById('viewPrescriptionMedication').textContent = data.medication || '-';
+  document.getElementById('viewPrescriptionDosage').textContent = data.dosage || '-';
+  document.getElementById('viewPrescriptionFrequency').textContent = data.frequency || '-';
+  document.getElementById('viewPrescriptionDuration').textContent = data.duration || '-';
+  document.getElementById('viewPrescriptionQuantity').textContent = data.quantity || '-';
+  document.getElementById('viewPrescriptionRefills').textContent = data.refills ?? '-';
+  document.getElementById('viewPrescriptionPrescribed').textContent = data.prescribed_at || '-';
+  document.getElementById('viewPrescriptionExpires').textContent = data.expires_at || '-';
+  document.getElementById('viewPrescriptionInstructions').textContent = data.instructions || '-';
+  document.getElementById('viewPrescriptionModal').classList.remove('hidden-view');
+}
+
+function closeViewPrescriptionModal(event) {
+  if (event && event.target !== document.getElementById('viewPrescriptionModal')) return;
+  document.getElementById('viewPrescriptionModal').classList.add('hidden-view');
+}
+
+function openEditPrescriptionModal(data) {
+  var form = document.getElementById('editPrescriptionForm');
+  form.action = '/prescriptions/' + data.id;
+
+  document.getElementById('editPrescriptionPatient').value = data.patient_id || '';
+  document.getElementById('editPrescriptionMedication').value = data.medication || '';
+  document.getElementById('editPrescriptionDosage').value = data.dosage || '';
+  document.getElementById('editPrescriptionFrequency').value = data.frequency || '';
+  document.getElementById('editPrescriptionDuration').value = data.duration || '';
+  document.getElementById('editPrescriptionQuantity').value = data.quantity || '';
+  document.getElementById('editPrescriptionRefills').value = data.refills || '0';
+  document.getElementById('editPrescriptionStatus').value = data.status || 'pending';
+  document.getElementById('editPrescriptionInstructions').value = data.instructions || '';
+
+  document.getElementById('editPrescriptionModal').classList.remove('hidden-view');
+}
+
+function closeEditPrescriptionModal(event) {
+  if (event && event.target !== document.getElementById('editPrescriptionModal')) return;
+  document.getElementById('editPrescriptionModal').classList.add('hidden-view');
 }
 
 @if ($errors->any())

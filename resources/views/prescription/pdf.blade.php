@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Prescription #{{ $prescription->id }}</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: DejaVu Sans, Arial, sans-serif;
+      color: #1e293b;
+      font-size: 12px;
+      line-height: 1.5;
+      background: #ffffff;
+    }
+
+    .page {
+      padding: 28px;
+    }
+
+    .header {
+      border: 1px solid #dbe3ef;
+      border-radius: 12px;
+      padding: 16px 18px;
+      margin-bottom: 16px;
+      background: #f8fbff;
+    }
+
+    .brand {
+      font-size: 20px;
+      font-weight: 700;
+      color: #1e3a5f;
+      margin: 0;
+    }
+
+    .sub {
+      margin: 4px 0 0;
+      color: #64748b;
+      font-size: 11px;
+    }
+
+    .meta-grid {
+      margin-top: 14px;
+      display: table;
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 10px;
+    }
+
+    .meta-row {
+      display: table-row;
+    }
+
+    .meta-item {
+      display: table-cell;
+      width: 50%;
+      border: 1px solid #e2e8f0;
+      border-radius: 10px;
+      background: #ffffff;
+      padding: 10px 12px;
+      vertical-align: top;
+    }
+
+    .label {
+      color: #64748b;
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.4px;
+      margin-bottom: 4px;
+    }
+
+    .value {
+      color: #0f172a;
+      font-size: 13px;
+      font-weight: 600;
+      word-break: break-word;
+    }
+
+    .section {
+      border: 1px solid #dbe3ef;
+      border-radius: 12px;
+      padding: 14px 16px;
+      margin-bottom: 12px;
+    }
+
+    .section h2 {
+      margin: 0 0 10px;
+      font-size: 14px;
+      color: #1e3a5f;
+    }
+
+    .table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 12px;
+    }
+
+    .table th,
+    .table td {
+      border: 1px solid #e2e8f0;
+      padding: 8px 9px;
+      text-align: left;
+      vertical-align: top;
+    }
+
+    .table th {
+      background: #f8fafc;
+      color: #334155;
+      font-weight: 700;
+      width: 26%;
+    }
+
+    .status {
+      display: inline-block;
+      padding: 3px 8px;
+      border-radius: 999px;
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+      background: #fef3c7;
+      color: #a16207;
+    }
+
+    .status-filled {
+      background: #dcfce7;
+      color: #166534;
+    }
+
+    .status-cancelled {
+      background: #fee2e2;
+      color: #991b1b;
+    }
+
+    .footer {
+      margin-top: 18px;
+      border-top: 1px dashed #cbd5e1;
+      padding-top: 10px;
+      font-size: 10px;
+      color: #64748b;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  @php
+    $statusClass = $prescription->status === 'filled' ? 'status-filled' : ($prescription->status === 'cancelled' ? 'status-cancelled' : '');
+  @endphp
+
+  <div class="page">
+    <div class="header">
+      <p class="brand">ClinicFlow E-Prescription</p>
+      <p class="sub">Prescription ID #{{ $prescription->id }}</p>
+
+      <div class="meta-grid">
+        <div class="meta-row">
+          <div class="meta-item">
+            <div class="label">Patient</div>
+            <div class="value">{{ $patientName }}</div>
+          </div>
+          <div class="meta-item">
+            <div class="label">Status</div>
+            <div class="value"><span class="status {{ $statusClass }}">{{ ucfirst($prescription->status) }}</span></div>
+          </div>
+        </div>
+        <div class="meta-row">
+          <div class="meta-item">
+            <div class="label">Prescribed At</div>
+            <div class="value">{{ optional($prescription->prescribed_at)->format('Y-m-d') ?: '-' }}</div>
+          </div>
+          <div class="meta-item">
+            <div class="label">Expires At</div>
+            <div class="value">{{ optional($prescription->expires_at)->format('Y-m-d') ?: '-' }}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>Medication Details</h2>
+      <table class="table">
+        <tr>
+          <th>Medication</th>
+          <td>{{ $prescription->medication ?: '-' }}</td>
+        </tr>
+        <tr>
+          <th>Dosage</th>
+          <td>{{ $prescription->dosage ?: '-' }}</td>
+        </tr>
+        <tr>
+          <th>Frequency</th>
+          <td>{{ $prescription->frequency ?: '-' }}</td>
+        </tr>
+        <tr>
+          <th>Duration</th>
+          <td>{{ $prescription->duration ?: '-' }}</td>
+        </tr>
+        <tr>
+          <th>Quantity</th>
+          <td>{{ $prescription->quantity ?: '-' }}</td>
+        </tr>
+        <tr>
+          <th>Refills</th>
+          <td>{{ $prescription->refills }}</td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="section">
+      <h2>Special Instructions</h2>
+      <div>{{ $prescription->instructions ?: 'No special instructions provided.' }}</div>
+    </div>
+
+    <div class="footer">
+      This document was generated by ClinicFlow. Keep this prescription for your records.
+    </div>
+  </div>
+</body>
+</html>

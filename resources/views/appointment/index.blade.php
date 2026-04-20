@@ -80,6 +80,11 @@
         <span>Patient Name</span>
         <select id="appointmentPatientName" required>
           <option value="">Search and select patient</option>
+          @foreach ($appointments as $patient)
+            <option value="{{ $patient->id }}">
+              {{ $patient->first_name }} {{ $patient->last_name }}
+            </option>
+          @endforeach
         </select>
       </label>
 

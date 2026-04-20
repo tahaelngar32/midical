@@ -81,6 +81,84 @@ class PrescriptionController extends Controller
             ->with('success', 'Prescription added successfully.');
     }
 
+    public function update(Request $request, int $id): RedirectResponse
+    {
+        $prescription = Prescription::findOrFail($id);
+
+        $data = $request->validate([
+            'patient_id' => 'required|exists:patients,id',
+            'medication' => 'required|string|max:255',
+            'dosage' => 'nullable|string|max:255',
+            'frequency' => 'nullable|string|max:255',
+            'duration' => 'nullable|string|max:255',
+            'quantity' => 'nullable|string|max:255',
+            'refills' => 'nullable|integer|min:0|max:20',
+            'instructions' => 'nullable|string|max:2000',
+            'status' => 'required|in:pending,filled,cancelled',
+        ]);
+
+        $durationDays = $this->extractDays($data['duration'] ?? null);
+
+        $prescription->update([
+            'patient_id' => $data['patient_id'],
+            'medication' => $data['medication'],
+            'dosage' => $data['dosage'] ?? null,
+            'frequency' => $data['frequency'] ?? null,
+            'duration' => $data['duration'] ?? null,
+            'quantity' => $data['quantity'] ?? null,
+            'refills' => $data['refills'] ?? 0,
+            'instructions' => $data['instructions'] ?? null,
+            'status' => $data['status'],
+            'expires_at' => $durationDays ? today()->copy()->addDays($durationDays) : null,
+        ]);
+
+        return redirect()
+            ->route('prescriptions.index')
+            ->with('success', 'Prescription updated successfully.');
+    }
+
+    public function updateStatus(Request $request, int $id): RedirectResponse
+    {
+        $data = $request->validate([
+            'status' => 'required|in:pending,filled,cancelled',
+        ]);
+
+        $prescription = Prescription::findOrFail($id);
+        $prescription->update([
+            'status' => $data['status'],
+        ]);
+
+        return redirect()
+            ->route('prescriptions.index')
+            ->with('success', 'Prescription status updated successfully.');
+    }
+
+    public function download(int $id)
+    {
+        $prescription = Prescription::with('patient')->findOrFail($id);
+        $patient = $prescription->patient;
+        $patientName = trim(($patient->first_name ?? '') . ' ' . ($patient->last_name ?? '')) ?: 'Unknown Patient';
+
+        $fileName = 'prescription-' . $prescription->id . '.pdf';
+
+        $html = view('prescription.pdf', [
+            'prescription' => $prescription,
+            'patientName' => $patientName,
+        ])->render();
+
+        if (app()->bound('dompdf.wrapper')) {
+            $pdf = app('dompdf.wrapper');
+            $pdf->loadHTML($html);
+            $pdf->setPaper('a4', 'portrait');
+
+            return $pdf->download($fileName);
+        }
+
+        return response($html, 200, [
+            'Content-Type' => 'text/html; charset=UTF-8',
+        ]);
+    }
+
     public function destroy(int $id): RedirectResponse
     {
         $prescription = Prescription::findOrFail($id);

@@ -357,6 +357,33 @@ input {
   color: #9aa4b2;
 }
 
+.manage-actions form {
+  margin: 0;
+}
+
+.prescription-details-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px 18px;
+}
+
+.prescription-details-grid h4 {
+  margin: 0 0 6px;
+  font-size: 13px;
+  font-weight: 700;
+  color: #111827;
+}
+
+.prescription-details-grid p {
+  margin: 0;
+  font-size: 14px;
+  color: #475569;
+}
+
+.prescription-details-grid .view-full {
+  grid-column: 1 / -1;
+}
+
 .view-section {
   display: block;
 }
@@ -691,6 +718,7 @@ input {
 .filter-status {
   position: relative;
   justify-content: space-between;
+  cursor: pointer;
 }
 
 .status-select {
@@ -699,8 +727,14 @@ input {
   background: transparent;
   outline: none;
   appearance: none;
+  cursor: pointer;
+  padding-right: 44px;
   color: #374151;
   font-size: 14px;
+}
+
+.filter-status > i {
+  pointer-events: none;
 }
 
 .appointments-manage-list {

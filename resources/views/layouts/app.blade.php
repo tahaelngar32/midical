@@ -42,38 +42,31 @@
                 </button>
             </div>
 
-            <nav class="px-3 py-4">
-                <a href="{{ route('dashboard') }}"
-                    class="side-link {{ request()->routeIs('dashboard') ? 'side-link-active' : '' }}">
-                    <i class="bi bi-bar-chart-line"></i><span>Dashboard</span>
-                </a>
-                <a href="{{ route('appointments.index') }}"
-                    class="side-link {{ request()->routeIs('appointments.index') ? 'side-link-active' : '' }}">
-                    <i class="bi bi-calendar3"></i><span>Appointments</span>
-                </a>
-                <a href="{{ route('schedule.index') }}"
-                    class="side-link {{ request()->routeIs('schedule.index') ? 'side-link-active' : '' }}">
-                    <i class="bi bi-calendar-week"></i><span>Schedule Management</span>
-                </a>
-                <a href="{{ route('patients.index') }}"
-                    class="side-link {{ request()->routeIs('patients.index') ? 'side-link-active' : '' }}">
-                    <i class="bi bi-people"></i><span>Patients</span>
-                </a>
-                <a href="{{ route('patients.create') }}"
-                    class="side-link {{ request()->routeIs('patients.create') ? 'side-link-active' : '' }}">
-                    <i class="bi bi-person-plus"></i><span>Add Patient</span>
-                </a>
-                <a href="{{ route('settings') }}"
-                    class="side-link {{ request()->routeIs('settings') ? 'side-link-active' : '' }}">
-                    <i class="bi bi-gear"></i><span>Settings</span>
-                </a>
-                <a href="{{ route('notifications.index') }}"
-                    class="side-link relative {{ request()->routeIs('notifications.index') ? 'side-link-active' : '' }}">
-                    <i class="bi bi-bell"></i><span>Notifications</span>
-                    <span class="notice-badge">5</span>
-                </a>
-            </nav>
-        </aside>
+      <nav class="px-3 py-4">
+        <a href="{{ route('dashboard') }}" class="side-link {{ request()->routeIs('dashboard') ? 'side-link-active' : '' }}">
+          <i class="bi bi-bar-chart-line"></i><span>Dashboard</span>
+        </a>
+        <a href="{{ route('appointments.index') }}" class="side-link {{ request()->routeIs('appointments.index') ? 'side-link-active' : '' }}">
+          <i class="bi bi-calendar3"></i><span>Appointments</span>
+        </a>
+        <a href="{{ route('schedule.index') }}" class="side-link {{ request()->routeIs('schedule.index') ? 'side-link-active' : '' }}">
+          <i class="bi bi-calendar-week"></i><span>Schedule Management</span>
+        </a>
+        <a href="{{ route('patients.index') }}" class="side-link {{ request()->routeIs('patients.index') ? 'side-link-active' : '' }}">
+          <i class="bi bi-people"></i><span>Patients</span>
+        </a>
+        <a href="{{ route('patients.create') }}" class="side-link {{ request()->routeIs('patients.create') ? 'side-link-active' : '' }}">
+          <i class="bi bi-person-plus"></i><span>Add Patient</span>
+        </a>
+        <a href="{{ route('settings') }}" class="side-link {{ request()->routeIs('settings') ? 'side-link-active' : '' }}">
+          <i class="bi bi-gear"></i><span>Settings</span>
+        </a>
+        <a href="{{ route('notifications.index') }}" class="side-link relative {{ request()->routeIs('notifications.index') ? 'side-link-active' : '' }}">
+          <i class="bi bi-bell"></i><span>Notifications</span>
+          <span class="notice-badge">5</span>
+        </a>
+      </nav>
+    </aside>
 
         <main class="main-panel min-h-screen lg:ml-[250px]">
             <div class="content-wrap px-4 py-4 sm:px-5 lg:px-6 lg:py-6">

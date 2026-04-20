@@ -27,4 +27,9 @@ public function lastAppointment()
 {
     return $this->hasOne(Appointment::class)->latestOfMany('appointment_date');
 }
+
+public function prescriptions()
+{
+    return $this->hasMany(Prescription::class);
+}
 }

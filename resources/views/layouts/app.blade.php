@@ -40,6 +40,9 @@
         <a href="{{ route('appointments.index') }}" class="side-link {{ request()->routeIs('appointments.index') ? 'side-link-active' : '' }}">
           <i class="bi bi-calendar3"></i><span>Appointments</span>
         </a>
+        <a href="{{ route('schedule.index') }}" class="side-link {{ request()->routeIs('schedule.index') ? 'side-link-active' : '' }}">
+          <i class="bi bi-calendar-week"></i><span>Schedule Management</span>
+        </a>
         <a href="{{ route('patients.index') }}" class="side-link {{ request()->routeIs('patients.index') ? 'side-link-active' : '' }}">
           <i class="bi bi-people"></i><span>Patients</span>
         </a>
@@ -73,9 +76,19 @@
               <i class="bi bi-bell text-lg"></i>
               <span class="top-badge">5</span>
             </button>
-            <button class="doctor-avatar" aria-label="Doctor profile" onclick="showToast('Profile opened')">
-              <img src="{{ asset('assets/img/doctor-img.png') }}" alt="Doctor profile" loading="lazy" />
-            </button>
+            <div class="relative" id="profileMenuWrap">
+              <button class="doctor-avatar" aria-label="Doctor profile" onclick="toggleProfileMenu(event)">
+                <img src="{{ asset('assets/img/doctor-img.png') }}" alt="Doctor profile" loading="lazy" />
+              </button>
+              <div id="profileDropdown" class="profile-dropdown hidden">
+                <a href="{{ route('settings') }}" class="profile-dropdown-item">
+                  <i class="bi bi-gear"></i> Settings
+                </a>
+                <a href="{{ route('login') }}" class="profile-dropdown-item profile-dropdown-logout">
+                  <i class="bi bi-box-arrow-right"></i> Logout
+                </a>
+              </div>
+            </div>
           </div>
         </header>
 

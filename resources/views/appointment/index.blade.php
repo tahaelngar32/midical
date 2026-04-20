@@ -7,10 +7,10 @@
 @section('content')
 <div class="mb-4 flex flex-wrap items-start justify-between gap-3">
   <div>
-    <h2 class="appointments-heading">Appointment Management</h2>
+    <h5 class="appointments-heading">Appointment Management</h5>
     <p class="appointments-sub">Schedule and manage patient appointments</p>
   </div>
-  <button class="new-btn" onclick="showToast('New appointment')"><i class="bi bi-plus-lg"></i><span>New Appointment</span></button>
+  <button class="new-btn" onclick="openAppointmentBookingModal()"><i class="bi bi-plus-lg"></i><span>New Appointment</span></button>
 </div>
 
 <div class="panel-card mb-4">
@@ -106,4 +106,63 @@
     </div>
   </article>
 </div>
+
+<div id="appointmentBookingModal" class="modal-backdrop hidden-view" onclick="closeAppointmentBookingModal(event)">
+  <div class="modal-panel appointment-booking-panel" role="dialog" aria-modal="true" aria-labelledby="appointmentBookingTitle">
+    <div class="modal-head">
+      <div>
+        <h3 id="appointmentBookingTitle">Add New Appointment</h3>
+        <p>Choose patient, date, and one of the available slots only.</p>
+      </div>
+      <button class="modal-close-btn" type="button" onclick="closeAppointmentBookingModal()" aria-label="Close">
+        <i class="bi bi-x-lg"></i>
+      </button>
+    </div>
+
+    <form id="appointmentBookingForm" class="patient-form-grid" onsubmit="submitAppointmentFromModal(event)">
+      <label class="form-field">
+        <span>Patient Name</span>
+        <select id="appointmentPatientName" required>
+          <option value="">Search and select patient</option>
+        </select>
+      </label>
+
+      <label class="form-field">
+        <span>Appointment Type</span>
+        <select id="appointmentType" required>
+          <option value="">Select type</option>
+          <option value="Consultation">Consultation</option>
+          <option value="Follow-up">Follow-up</option>
+          <option value="Video Consultation">Video Consultation</option>
+          <option value="Prescription Review">Prescription Review</option>
+        </select>
+      </label>
+
+      <label class="form-field">
+        <span>Date</span>
+        <input id="appointmentDate" type="date" required />
+      </label>
+
+      <label class="form-field">
+        <span>Note</span>
+        <input id="appointmentNote" type="text" placeholder="Optional note" />
+      </label>
+
+      <div class="form-full">
+        <h4 class="appointment-slots-title">Available Slots</h4>
+        <input id="appointmentSelectedSlot" type="hidden" />
+        <div id="appointmentSlotsGrid" class="appointment-slots-grid"></div>
+      </div>
+
+      <div class="modal-actions form-full">
+        <button class="modal-secondary-btn" type="button" onclick="closeAppointmentBookingModal()">Cancel</button>
+        <button class="modal-primary-btn" type="submit">Book Appointment</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 @endsection

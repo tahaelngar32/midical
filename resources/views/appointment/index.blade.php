@@ -143,7 +143,6 @@
     </div>
 
     <form id="appointmentBookingForm" class="patient-form-grid" onsubmit="submitAppointmentFromModal(event)">
-
       <label class="form-field">
         <span>Patient Name</span>
         <select id="appointmentPatientName" required>

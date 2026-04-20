@@ -16,7 +16,7 @@ class AppointmentController extends Controller
             ->latest()
             ->paginate(10);
 
-        return view('appointments.index', compact('appointments'));
+        return view('appointment.index', compact('appointments'));
     }
 
     // صفحة إضافة حجز
@@ -54,7 +54,7 @@ class AppointmentController extends Controller
 
         Appointment::create($data);
 
-        return redirect()->route('appointments.index')
+        return redirect()->route('appointment.index')
             ->with('success', 'تم إضافة الحجز بنجاح');
     }
 

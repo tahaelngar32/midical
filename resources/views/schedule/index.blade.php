@@ -18,35 +18,81 @@
     </div>
   </div>
 
-  <form id="scheduleAvailabilityForm" class="patient-form-grid" onsubmit="addScheduleAvailability(event)">
-    <label class="form-field">
-      <span>Day</span>
-      <select id="scheduleDay" required>
-        <option value="">Select day</option>
-        <option value="sunday">Sunday</option>
-        <option value="monday">Monday</option>
-        <option value="tuesday">Tuesday</option>
-        <option value="wednesday">Wednesday</option>
-        <option value="thursday">Thursday</option>
-        <option value="friday">Friday</option>
-        <option value="saturday">Saturday</option>
-      </select>
-    </label>
+ {{-- داخل الـ form tag بدل onsubmit --}}
+<form method="POST" action="{{ route('schedule.store') }}" class="patient-form-grid">
+  @csrf
 
-    <label class="form-field">
-      <span>From</span>
-      <input id="scheduleFrom" type="time" required />
-    </label>
-
-    <label class="form-field">
-      <span>To</span>
-      <input id="scheduleTo" type="time" required />
-    </label>
-
-    <div class="form-full schedule-actions-row">
-      <button class="modal-primary-btn" type="submit"><i class="bi bi-plus-lg"></i> Add Availability</button>
+  {{-- Validation errors --}}
+  @error('overlap')
+    <div class="form-full" style="color:#991b1b;font-size:13px;background:#fee2e2;padding:10px 14px;border-radius:8px;">
+      {{ $message }}
     </div>
-  </form>
+  @enderror
+
+  {{-- باقي الحقول كما هي بس غيّر id → name --}}
+  <label class="form-field">
+    <span>Day</span>
+    <select name="day" required>
+      <option value="">Select day</option>
+      @foreach(['sunday','monday','tuesday','wednesday','thursday','friday','saturday'] as $d)
+        <option value="{{ $d }}" {{ old('day') === $d ? 'selected' : '' }}>
+          {{ ucfirst($d) }}
+        </option>
+      @endforeach
+    </select>
+  </label>
+
+  <label class="form-field">
+    <span>From</span>
+    <input name="from" type="time" value="{{ old('from') }}" required />
+  </label>
+
+  <label class="form-field">
+    <span>To</span>
+    <input name="to" type="time" value="{{ old('to') }}" required />
+  </label>
+
+  <div class="form-full schedule-actions-row">
+    <button class="modal-primary-btn" type="submit">
+      <i class="bi bi-plus-lg"></i> Add Availability
+    </button>
+  </div>
+</form>
+
+{{-- قائمة الـ schedules --}}
+<div id="scheduleAvailabilityList" class="schedule-availability-list">
+  @forelse ($schedules as $schedule)
+    <div class="schedule-availability-item {{ $schedule->is_active ? '' : 'schedule-item-inactive' }}">
+      <div class="schedule-item-info">
+        <span class="schedule-day">{{ ucfirst($schedule->day) }}</span>
+        <span class="schedule-time">
+          {{ \Carbon\Carbon::createFromTimeString($schedule->from)->format('h:i A') }}
+          —
+          {{ \Carbon\Carbon::createFromTimeString($schedule->to)->format('h:i A') }}
+        </span>
+      </div>
+      <div class="schedule-item-actions">
+        <form method="POST" action="{{ route('schedule.toggle', $schedule->id) }}" style="display:inline;">
+          @csrf @method('PATCH')
+          <button type="submit" class="icon-btn" title="{{ $schedule->is_active ? 'Deactivate' : 'Activate' }}">
+            <i class="bi bi-{{ $schedule->is_active ? 'toggle-on' : 'toggle-off' }}"></i>
+          </button>
+        </form>
+        <form method="POST" action="{{ route('schedule.destroy', $schedule->id) }}"
+              style="display:inline;" onsubmit="return confirm('Remove this schedule?')">
+          @csrf @method('DELETE')
+          <button type="submit" class="icon-btn icon-btn-danger">
+            <i class="bi bi-trash"></i>
+          </button>
+        </form>
+      </div>
+    </div>
+  @empty
+    <p style="color:#94a3b8;text-align:center;padding:24px;">
+      No availability added yet.
+    </p>
+  @endforelse
+</div>
 
   <div id="scheduleAvailabilityList" class="schedule-availability-list"></div>
 </div>

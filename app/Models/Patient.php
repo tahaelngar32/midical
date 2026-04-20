@@ -17,4 +17,14 @@ class Patient extends Model
         'address',
         'emergency_contact',
     ];
+    
+    public function appointments()
+{
+    return $this->hasMany(Appointment::class);
+}
+
+public function lastAppointment()
+{
+    return $this->hasOne(Appointment::class)->latestOfMany('appointment_date');
+}
 }

@@ -570,34 +570,50 @@ function initAppointmentBookingModal() {
   }
 }
 
-function openPatientModal(trigger) {
-  var row = trigger ? trigger.closest(".patient-row") : null;
-  var modal = document.getElementById("patientProfileModal");
-  if (!row || !modal) return;
-  var data = row.dataset || {};
+// function openPatientModal(trigger) {
+//   var row = trigger ? trigger.closest(".patient-row") : null;
+//   var modal = document.getElementById("patientProfileModal");
+//   if (!row || !modal) return;
+//   var data = row.dataset || {};
 
-  var setText = function (id, value) {
-    var element = document.getElementById(id);
-    if (!element) return;
-    element.textContent = value || "-";
-  };
+//   var setText = function (id, value) {
+//     var element = document.getElementById(id);
+//     if (!element) return;
+//     element.textContent = value || "-";
+//   };
 
-  setText("patientModalInitials", data.initials);
-  setText("patientModalName", data.name);
-  setText("patientModalId", data.patientId);
-  setText("patientModalPhone", data.phone);
-  setText("patientModalEmail", data.email);
-  setText("patientModalAddress", data.address);
-  setText("patientModalEmergencyName", data.emergencyName);
-  setText("patientModalEmergencyPhone", data.emergencyPhone);
-  setText("patientModalAge", data.age);
-  setText("patientModalGender", data.gender);
-  setText("patientModalBloodType", data.bloodType);
-  setText("patientModalInsurance", data.insurance);
+//   setText("patientModalInitials", data.initials);
+//   setText("patientModalName", data.name);
+//   setText("patientModalId", data.patientId);
+//   setText("patientModalPhone", data.phone);
+//   setText("patientModalEmail", data.email);
+//   setText("patientModalAddress", data.address);
+//   setText("patientModalEmergencyName", data.emergencyName);
+//   setText("patientModalEmergencyPhone", data.emergencyPhone);
+//   setText("patientModalAge", data.age);
+//   setText("patientModalGender", data.gender);
+//   setText("patientModalBloodType", data.bloodType);
+//   setText("patientModalInsurance", data.insurance);
 
-  setPatientModalTab("overview");
-  modal.classList.remove("hidden-view");
-  document.body.style.overflow = "hidden";
+//   setPatientModalTab("overview");
+//   modal.classList.remove("hidden-view");
+//   document.body.style.overflow = "hidden";
+// }
+function openPatientModal(btn) {
+  const row = btn.closest('.patient-row');
+
+  document.getElementById('patientModalInitials').textContent  = row.dataset.initials;
+  document.getElementById('patientModalName').textContent      = row.dataset.name;
+  document.getElementById('patientModalId').textContent        = row.dataset.patientId;
+  document.getElementById('patientModalPhone').textContent     = row.dataset.phone;
+  document.getElementById('patientModalEmail').textContent     = row.dataset.email;
+  document.getElementById('patientModalAddress').textContent   = row.dataset.address;
+  document.getElementById('patientModalEmergency').textContent = row.dataset.emergency;
+  document.getElementById('patientModalAge').textContent       = row.dataset.age;
+  document.getElementById('patientModalGender').textContent    = row.dataset.gender;
+  document.getElementById('patientModalBloodType').textContent = row.dataset.bloodType;
+
+  document.getElementById('patientProfileModal').classList.remove('hidden-view');
 }
 
 function closePatientModal(event) {

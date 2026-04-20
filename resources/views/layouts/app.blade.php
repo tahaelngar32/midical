@@ -46,6 +46,9 @@
         <a href="{{ route('patients.index') }}" class="side-link {{ request()->routeIs('patients.index') ? 'side-link-active' : '' }}">
           <i class="bi bi-people"></i><span>Patients</span>
         </a>
+        <a href="{{ route('prescriptions.index') }}" class="side-link {{ request()->routeIs('prescriptions.index') ? 'side-link-active' : '' }}">
+          <i class="bi bi-file-earmark-medical"></i><span>Prescriptions</span>
+        </a>
         <a href="{{ route('patients.create') }}" class="side-link {{ request()->routeIs('patients.create') ? 'side-link-active' : '' }}">
           <i class="bi bi-person-plus"></i><span>Add Patient</span>
         </a>

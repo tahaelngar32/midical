@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AppointmentController;
 use App\Http\Controllers\PatientController;
+use App\Http\Controllers\PrescriptionController;
 use App\Http\Controllers\ScheduleController;
 use Illuminate\Support\Facades\Route;
 
@@ -26,6 +27,11 @@ Route::get   ('appointments',       [AppointmentController::class, 'index'])->na
 Route::post  ('appointments',       [AppointmentController::class, 'store'])->name('appointments.store');
 Route::patch ('appointments/{id}',  [AppointmentController::class, 'update'])->name('appointments.update');
 Route::delete('appointments/{id}',  [AppointmentController::class, 'destroy'])->name('appointments.destroy');
+
+// Prescriptions
+Route::get   ('prescriptions',      [PrescriptionController::class, 'index'])->name('prescriptions.index');
+Route::post  ('prescriptions',      [PrescriptionController::class, 'store'])->name('prescriptions.store');
+Route::delete('prescriptions/{id}', [PrescriptionController::class, 'destroy'])->name('prescriptions.destroy');
 
 //Route::view('/login', 'auth.login')->name('login');
 Route::view('/', 'pages.dashboard')->name('dashboard');

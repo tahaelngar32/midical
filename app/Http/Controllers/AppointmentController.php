@@ -15,8 +15,9 @@ class AppointmentController extends Controller
         $appointments = Appointment::with(['patient', 'doctor'])
             ->latest()
             ->paginate(10);
-
-        return view('appointment.index', compact('appointments'));
+            $patients = Patient::all();
+           // dd($patients);
+        return view('appointment.index', compact('appointments','patients'));
     }
 
     // صفحة إضافة حجز

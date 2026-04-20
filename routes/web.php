@@ -13,3 +13,7 @@ Route::view('/patients', 'patient.index')->name('patients.index');
 Route::view('/patients/create', 'patient.create')->name('patients.create');
 Route::view('/settings', 'pages.settings')->name('settings');
 Route::view('/notifications', 'notification.index')->name('notifications.index');
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

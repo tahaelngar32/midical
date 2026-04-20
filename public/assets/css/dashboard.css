@@ -1262,7 +1262,7 @@ input {
   border-color: #fecaca;
   background: #fee2e2;
   color: #b91c1c;
-  opacity: 1;
+  opacity: 0.55;
   cursor: not-allowed;
   pointer-events: none;
 }

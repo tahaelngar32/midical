@@ -10,6 +10,18 @@
   <p class="appointments-sub">Add your available working hours by day and time range.</p>
 </div>
 
+@if (session('success'))
+  <div style="padding:12px 16px;border-radius:8px;background:#dcfce7;color:#166534;font-size:14px;margin-bottom:16px;">
+    <i class="bi bi-check-circle"></i> {{ session('success') }}
+  </div>
+@endif
+
+@if ($errors->any())
+  <div style="padding:12px 16px;border-radius:8px;background:#fee2e2;color:#991b1b;font-size:14px;margin-bottom:16px;">
+    <i class="bi bi-exclamation-triangle"></i> {{ $errors->first() }}
+  </div>
+@endif
+
 <div class="panel-card page-form-card">
   <div class="panel-head">
     <div>
@@ -21,13 +33,6 @@
  {{-- داخل الـ form tag بدل onsubmit --}}
 <form method="POST" action="{{ route('schedule.store') }}" class="patient-form-grid">
   @csrf
-
-  {{-- Validation errors --}}
-  @error('overlap')
-    <div class="form-full" style="color:#991b1b;font-size:13px;background:#fee2e2;padding:10px 14px;border-radius:8px;">
-      {{ $message }}
-    </div>
-  @enderror
 
   {{-- باقي الحقول كما هي بس غيّر id → name --}}
   <label class="form-field">
@@ -93,7 +98,5 @@
     </p>
   @endforelse
 </div>
-
-  <div id="scheduleAvailabilityList" class="schedule-availability-list"></div>
 </div>
 @endsection

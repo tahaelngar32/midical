@@ -9,10 +9,16 @@ class ScheduleController extends Controller
 {
     public function index()
     {
-        $schedules = Schedule::orderByRaw("FIELD(day,
-            'sunday','monday','tuesday','wednesday',
-            'thursday','friday','saturday'
-        )")->get();
+        $schedules = Schedule::orderByRaw("CASE day
+            WHEN 'sunday' THEN 1
+            WHEN 'monday' THEN 2
+            WHEN 'tuesday' THEN 3
+            WHEN 'wednesday' THEN 4
+            WHEN 'thursday' THEN 5
+            WHEN 'friday' THEN 6
+            WHEN 'saturday' THEN 7
+            ELSE 8
+        END")->get();
 
         return view('schedule.index', compact('schedules'));
     }
@@ -28,8 +34,8 @@ class ScheduleController extends Controller
         // منع التكرار لنفس اليوم والوقت
         $exists = Schedule::where('day', $validated['day'])
             ->where(function ($q) use ($validated) {
-                $q->whereBetween('from', [$validated['from'], $validated['to']])
-                  ->orWhereBetween('to',   [$validated['from'], $validated['to']]);
+                                $q->where('from', '<', $validated['to'])
+                                    ->where('to', '>', $validated['from']);
             })->exists();
 
         if ($exists) {

@@ -260,7 +260,7 @@ document.getElementById('appointmentDate').addEventListener('change', function (
   grid.innerHTML = '<p style="color:#94a3b8;font-size:14px;">Loading slots…</p>';
   document.getElementById('appointmentSelectedSlot').value = '';
 
-  fetch(`/api/schedule/slots?date=${date}`, {
+  fetch(`/schedule/slots?date=${date}`, {
     headers: { 'X-Requested-With': 'XMLHttpRequest' },
   })
   .then(r => r.json())

@@ -560,10 +560,16 @@ function submitAppointmentFromModal(event) {
 }
 
 function initScheduleManagement() {
+  var body = document.body;
+  var activeView = body ? body.getAttribute("data-active-view") : "";
+  if (activeView === "schedule") return;
   renderScheduleAvailabilityList();
 }
 
 function initAppointmentBookingModal() {
+  var body = document.body;
+  var activeView = body ? body.getAttribute("data-active-view") : "";
+  if (activeView === "appointments") return;
   var dateInput = document.getElementById("appointmentDate");
   if (dateInput) {
     dateInput.addEventListener("change", renderAppointmentSlots);

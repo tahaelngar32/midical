@@ -14,58 +14,93 @@
       </div>
     </div>
 
-    <form id="addPatientForm" class="patient-form-grid" onsubmit="submitPatientForm(event)">
+    {{-- عرض أخطاء الـ Validation --}}
+    @if ($errors->any())
+      <div class="alert alert-danger" style="margin:0 0 16px;padding:12px 16px;border-radius:8px;background:#fee2e2;color:#991b1b;font-size:14px;">
+        <ul style="margin:0;padding-left:18px;">
+          @foreach ($errors->all() as $error)
+            <li>{{ $error }}</li>
+          @endforeach
+        </ul>
+      </div>
+    @endif
+
+    <form method="POST"
+          action="{{ route('patients.store') }}"
+          class="patient-form-grid">
+      @csrf
+
       <label class="form-field">
         <span>First Name</span>
-        <input id="patientFirstName" type="text" placeholder="Enter first name" />
+        <input name="first_name" type="text"
+               placeholder="Enter first name"
+               value="{{ old('first_name') }}" />
       </label>
 
       <label class="form-field">
         <span>Last Name</span>
-        <input id="patientLastName" type="text" placeholder="Enter last name" />
+        <input name="last_name" type="text"
+               placeholder="Enter last name"
+               value="{{ old('last_name') }}" />
       </label>
 
       <label class="form-field">
         <span>Age</span>
-        <input id="patientAge" type="number" min="0" placeholder="Age" />
+        <input name="age" type="number" min="0"
+               placeholder="Age"
+               value="{{ old('age') }}" />
       </label>
 
       <label class="form-field">
         <span>Gender</span>
-        <select id="patientGender">
+        <select name="gender">
           <option value="">Select</option>
-          <option value="Male">Male</option>
-          <option value="Female">Female</option>
+          <option value="Male"   {{ old('gender') === 'Male'   ? 'selected' : '' }}>Male</option>
+          <option value="Female" {{ old('gender') === 'Female' ? 'selected' : '' }}>Female</option>
         </select>
       </label>
 
       <label class="form-field">
         <span>Blood Type</span>
-        <input id="patientBloodType" type="text" placeholder="A+" />
+        <input name="blood_type" type="text"
+               placeholder="A+"
+               value="{{ old('blood_type') }}" />
       </label>
 
       <label class="form-field form-span-2">
         <span>Phone</span>
-        <input id="patientPhone" type="text" placeholder="+1 234-567-8900" />
+        <input name="phone" type="text"
+               placeholder="+1 234-567-8900"
+               value="{{ old('phone') }}" />
       </label>
 
       <label class="form-field">
         <span>Email</span>
-        <input id="patientEmail" type="email" placeholder="patient@email.com" />
+        <input name="email" type="email"
+               placeholder="patient@email.com"
+               value="{{ old('email') }}" />
       </label>
 
       <label class="form-field form-full">
         <span>Address</span>
-        <input id="patientAddress" type="text" placeholder="Street address" />
+        <input name="address" type="text"
+               placeholder="Street address"
+               value="{{ old('address') }}" />
       </label>
 
       <label class="form-field form-full">
         <span>Emergency Contact</span>
-        <input id="patientEmergency" type="text" placeholder="Name - Phone" />
+        <input name="emergency_contact" type="text"
+               placeholder="Name - Phone"
+               value="{{ old('emergency_contact') }}" />
       </label>
 
       <div class="modal-actions form-full">
-        <a href="{{ route('patients.index') }}" class="modal-secondary-btn" style="display:inline-flex;align-items:center;padding:0 14px;">Cancel</a>
+        <a href="{{ route('patients.index') }}"
+           class="modal-secondary-btn"
+           style="display:inline-flex;align-items:center;padding:0 14px;">
+          Cancel
+        </a>
         <button type="submit" class="modal-primary-btn">Add Patient</button>
       </div>
     </form>

@@ -1,16 +1,16 @@
 "use client";
 
-import { PatientHeader } from "@/features/patient/components/detailes/PatientHeader";
-import { Tabs } from "@/features/patient/components/detailes/Tabs";
-import { redirect, useRouter } from "next/navigation";
-import React, { useEffect, useRef } from "react";
+import { PatientHeader } from "@/features/patient/components/details/PatientHeader";
+import { Tabs } from "@/features/patient/components/details/Tabs";
+import { useRouter } from "next/navigation";
+import React, { useCallback, useEffect, useRef } from "react";
 
 const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const router = useRouter();
 
-  const handleClose = () => {
+  const handleClose = useCallback(() => {
     router.push("/patients");
-  };
+  }, [router]);
 
   const overlayRef = useRef<HTMLDivElement>(null);
 
@@ -24,7 +24,7 @@ const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     return () => {
       document.removeEventListener("keydown", handleKeyDown);
     };
-  }, []);
+  }, [handleClose]);
     
 
 

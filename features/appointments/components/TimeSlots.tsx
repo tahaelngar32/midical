@@ -2,8 +2,10 @@ import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import React from "react";
 
+import type { TimeSlot } from "../mock/generateTimeSlots";
+
 export const TimeSlots: React.FC<{
-  slots: any[];
+  slots: TimeSlot[];
   selected: string | null;
   setSelected: React.Dispatch<React.SetStateAction<string | null>>;
 }> = ({ slots, selected, setSelected }) => {
@@ -21,7 +23,7 @@ export const TimeSlots: React.FC<{
           variant="outline"
           onClick={() => {
             if (slot.isBooked) return;
-            setSelected(slot.from); // 👈 هنا التعديل الأساسي
+            setSelected(slot.from);
           }}
           className={cn(
             slot.isBooked && "bg-muted cursor-not-allowed opacity-60",

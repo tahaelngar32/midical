@@ -2,8 +2,6 @@ import { flexRow } from "@/lib/utils/layout";
 import { Appointment } from "../types/appointment.types";
 import { Avatar } from "@/components/Avatar";
 import { StatusBadge } from "./statusBadge";
-import { Clapperboard, Clock } from "lucide-react";
-import { Item, ItemContent, ItemDescription } from "@/components/ui/item";
 import { Details } from "./Details";
 import { Notes } from "./Notes";
 
@@ -13,7 +11,6 @@ interface Props {
 
 export const Info: React.FC<Props> = ({ appointment }) => {
   const {
-    id,
     patientName,
     patientPhoto,
     status,

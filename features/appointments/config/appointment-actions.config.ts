@@ -1,10 +1,11 @@
-import { MessageSquare, Pencil, Phone, Trash2, Video } from "lucide-react";
+import { MessageSquare, Pencil, Phone, Video } from "lucide-react";
 import { AppointmentActionProps } from "../types/appointment.types";
+import type { ElementType } from "react";
 
 export type ActionItem = {
   key: string;
   label: string;
-  icon: any;
+  icon: ElementType;
   variant?: "default" | "outline";
   className?: string;
   show: (ctx: AppointmentActionProps) => boolean;

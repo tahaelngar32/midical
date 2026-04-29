@@ -1,5 +1,5 @@
 import React from "react";
-import { getNotificationStats } from "../utlis/getNotificationStats";
+import { getNotificationStats } from "../utils/getNotificationStats";
 import { notifications } from "../mock/notifications.mock";
 import { NotificationStats } from "../types/notifications.type";
 import NotificationStatsConfig from "../config/notification-stats.config";

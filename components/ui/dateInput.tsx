@@ -10,7 +10,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import useQueryParams from "@/hookes/useQueryParam";
+import useQueryParams from "@/hooks/useQueryParam";
 import { Field, FieldLabel } from "./field";
 import { cn } from "@/lib/utils/cn";
 
@@ -38,7 +38,11 @@ export default function DateInput({
         <PopoverTrigger asChild>
           <Field>
             {showLabel && <FieldLabel>Select Date</FieldLabel>}
-            <Button type="button" variant="outline" className={cn(showLabel&&"text-left")}>
+            <Button
+              type="button"
+              variant="outline"
+              className={cn(showLabel && "text-left")}
+            >
               {date ? format(date, "PPP") : "Choose date"}
             </Button>
             {children}

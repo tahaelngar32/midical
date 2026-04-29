@@ -1,9 +1,18 @@
+export type TimeSlot = {
+  id: number;
+  from: string;
+  to: string;
+  label: string;
+  isBooked: boolean;
+};
+
+type TimeSlotDraft = Omit<TimeSlot, "isBooked">;
+
 export function generateTimeSlots(
   start = "10:00",
   end = "12:00",
   interval = 15,
-) {
-  const slots = [];
+): TimeSlot[] {
 
   const toMinutes = (time: string) => {
     const [h, m] = time.split(":").map(Number);
@@ -27,8 +36,7 @@ export function generateTimeSlots(
 
   let id = 1;
 
-  // أولاً نحسب عدد السلوٹس
-  const tempSlots: any[] = [];
+  const tempSlots: TimeSlotDraft[] = [];
 
   while (current < endMinutes) {
     const next = current + interval;
@@ -43,10 +51,8 @@ export function generateTimeSlots(
     current = next;
   }
 
-  // نحسب التلت الأخير
   const thirdStartIndex = Math.floor((tempSlots.length * 2) / 3);
 
-  // نضيف isBooked
   const finalSlots = tempSlots.map((slot, index) => ({
     ...slot,
     isBooked: index >= thirdStartIndex,

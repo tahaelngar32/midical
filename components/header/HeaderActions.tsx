@@ -2,10 +2,9 @@
 
 import React, { useState } from "react";
 import { Avatar } from "../Avatar";
-import { NotificationButton } from "./NotificationButton";
 import { SearchInput } from "../SearchInput";
-import useQueryParams from "@/hookes/useQueryParam";
-import { DropdownMenuNotfication } from "@/features/notfication/components/DropdownMenuNotfication";
+import useQueryParams from "@/hooks/useQueryParam";
+import { DropdownMenuNotification } from "@/features/notification/components/DropdownMenuNotification";
 
 export const HeaderActions: React.FC = () => {
   const { params, setQueryParams } = useQueryParams();
@@ -31,12 +30,14 @@ export const HeaderActions: React.FC = () => {
           placeholder="Search patients and appointments"
           id="header-search"
           value={value}
-          onChange={(e: any) => setValue(e.target.value)}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+            setValue(e.target.value)
+          }
           className="max-w-sm"
         />
       </form>
       
-      <DropdownMenuNotfication />
+      <DropdownMenuNotification />
       <Avatar />
     </div>
   );

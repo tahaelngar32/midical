@@ -4,22 +4,15 @@ import {
   DropdownMenuContent,
   DropdownMenuGroup,
   DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuPortal,
   DropdownMenuSeparator,
-  DropdownMenuShortcut,
-  DropdownMenuSub,
-  DropdownMenuSubContent,
-  DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { notifications } from "@/features/notfication/mock/notifications.mock";
+import { notifications } from "@/features/notification/mock/notifications.mock";
 import { NotificationRow } from "./NotificationRow";
 import Link from "next/link";
 import { NotificationButton } from "@/components/header/NotificationButton";
-import { no } from "zod/locales";
 
-export function DropdownMenuNotfication() {
+export function DropdownMenuNotification() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -43,9 +36,7 @@ export function DropdownMenuNotfication() {
               className="text-md bg-[#e5e7eb] rounded-0"
               asChild
             >
-              <Link rel="stylesheet" href="/notifications">
-                view all notifications
-              </Link>
+              <Link href="/notifications">view all notifications</Link>
             </DropdownMenuItem>
           </ul>
         </DropdownMenuGroup>

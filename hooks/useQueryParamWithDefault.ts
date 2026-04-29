@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
-import useQueryParams from "@/hookes/useQueryParam";
+import useQueryParams from "@/hooks/useQueryParam";
 
 export function useQueryParamWithDefault<T extends string>(
   key: string,
@@ -26,4 +26,3 @@ export function useQueryParamWithDefault<T extends string>(
     setValue,
   };
 }
-

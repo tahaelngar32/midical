@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useActionState } from "react";
 
 import { createAppointment } from "@/features/appointments/actions/createAppointment";
@@ -24,11 +24,17 @@ import { appointmentTypeConfig } from "../config/appointment-type.config";
 import { generateTimeSlots } from "../mock/generateTimeSlots";
 import { flexRow } from "@/lib/utils/layout";
 import { TimeSlots } from "./TimeSlots";
-import DateInput from "@/components/ui/dataInbut";
+import DateInput from "@/components/ui/dateInput";
+
+type FormErrors = Record<string, string[]>;
+
+function FieldError({ errors, name }: { errors?: FormErrors; name: string }) {
+  const error = errors?.[name];
+  return error ? <p className="text-red-500 text-sm">{error[0]}</p> : null;
+}
 
 export function CreateNewAppointmentForm() {
   const [state, formAction] = useActionState(createAppointment, null);
-  console.log(state?.errors);
   const [isNewPatient, setIsNewPatient] = useState(true);
   const [selected, setSelected] = useState<string | null>(null);
 
@@ -40,30 +46,22 @@ export function CreateNewAppointmentForm() {
     { id: "p3", name: "Omar Khaled" },
     { id: "p4", name: "Youssef Mahmoud" },
   ];
-
-  const Error = ({ name }: { name: string }) => {
-    const error = state?.errors?.[name];
-    return error ? <p className="text-red-500 text-sm">{error[0]}</p> : null;
-  };
-
-  useEffect(() => {
-    // optional: reset selected slot when switching patient mode
-    setSelected(null);
-  }, [isNewPatient]);
+  const errors = state?.errors;
 
   return (
     <div>
-      {/* Checkbox */}
       <FieldGroup className={flexRow("gap-2 py-2")}>
         <Field
           orientation="horizontal"
           className="grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 items-center"
         >
           <Checkbox
-            id="isNewPatient"
-            name="isNewPatient"
             checked={isNewPatient}
-            onCheckedChange={(val) => setIsNewPatient(!!val)}
+            onCheckedChange={(val) => {
+              const next = !!val;
+              setIsNewPatient(next);
+              setSelected(null);
+            }}
             className="mb-1 size-5"
           />
           <Label htmlFor="isNewPatient">Is New Patient</Label>
@@ -72,12 +70,18 @@ export function CreateNewAppointmentForm() {
 
       <form action={formAction}>
         <FieldGroup className="grid grid-cols-1 sm:grid-cols-2 gap-3 py-2">
-          {/* Patient Name */}
+          <input
+            type="hidden"
+            name="isNewPatient"
+            value={Number(isNewPatient)}
+          />
+          
+
           {isNewPatient ? (
             <Field>
               <Label>Patient Name</Label>
               <Input name="patientName" placeholder="Enter patient name" />
-              <Error name="patientId" />
+              <FieldError errors={errors} name="patientName" />
             </Field>
           ) : (
             <Field>
@@ -99,11 +103,10 @@ export function CreateNewAppointmentForm() {
                 </SelectContent>
               </Select>
 
-              <Error name="patientId" />
+              <FieldError errors={errors} name="patientId" />
             </Field>
           )}
 
-          {/* Appointment Type */}
           <Field>
             <Label>Appointment Type</Label>
 
@@ -123,19 +126,18 @@ export function CreateNewAppointmentForm() {
               </SelectContent>
             </Select>
 
-            <Error name="appointmentType" />
+            <FieldError errors={errors} name="appointmentType" />
           </Field>
 
-          {/* Note */}
           <Field>
             <Label>Note</Label>
             <Input name="note" placeholder="Optional note" />
-            <Error name="note" />
+            <FieldError errors={errors} name="note" />
           </Field>
 
           {/* Date */}
-          <DateInput>
-            <Error name="date" />
+          <DateInput isAppointment>
+            <FieldError errors={errors} name="date" />
           </DateInput>
 
           {/* hidden slot */}
@@ -149,10 +151,8 @@ export function CreateNewAppointmentForm() {
           setSelected={setSelected}
         />
 
-        {/* slot error */}
-        <Error name="from" />
+        <FieldError errors={errors} name="from" />
 
-        {/* Footer */}
         <DialogFooter className="bg-transparent border-t-0">
           <Button type="submit" disabled={!selected} className="bg-[#4988C4]">
             Add Appointment

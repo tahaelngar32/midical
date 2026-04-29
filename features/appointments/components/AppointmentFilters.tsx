@@ -1,4 +1,3 @@
-import { Input } from "@/components/ui/input";
 import { SearchInput } from "@/components/SearchInput";
 
 import {
@@ -7,16 +6,14 @@ import {
   SelectGroup,
   SelectItem,
   SelectLabel,
-  SelectSeparator,
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
 import { filterContainer, flexRow } from "@/lib/utils/layout";
-import React from "react";
 import { statusConfig } from "../config/appointment-status.config";
-import DateInput from "@/components/ui/dataInbut";
+import DateInput from "@/components/ui/dateInput";
 
-export const AppointmentFilters: React.FC<{}> = () => {
+export const AppointmentFilters = () => {
   return (
     <div className={filterContainer("md:grid-cols-[3fr_1fr_1fr]")}>
       <SearchInput

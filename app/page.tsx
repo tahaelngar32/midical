@@ -1,4 +1,4 @@
-import Stats from "@/features/notfication/components/stats";
+import Stats from "@/features/notification/components/stats";
 import AppointmentList from "./_components/AppointmentList";
 import QuickActions from "./_components/QuickActions";
 import RecentActivity from "./_components/RecentActivity";

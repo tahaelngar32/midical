@@ -1,7 +1,7 @@
 "use client";
 
-import { useActivePage } from "@/hookes/useActivePage";
-import { useIsMobile } from "@/hookes/useIsMobile";
+import { useActivePage } from "@/hooks/useActivePage";
+import { useIsMobile } from "@/hooks/useIsMobile";
 import { createContext, useContext, useEffect, useState } from "react";
 
 type LayoutContextType = {
@@ -16,7 +16,7 @@ const LayoutContext = createContext<LayoutContextType | null>(null);
 
 export const LayoutProvider = ({ children }: { children: React.ReactNode }) => {
   const activePage = useActivePage();
-  const [title, setTitle] = useState(activePage||"Dashboard");
+  const [title, setTitle] = useState(activePage || "Dashboard");
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const isMobile = useIsMobile();
   useEffect(() => {

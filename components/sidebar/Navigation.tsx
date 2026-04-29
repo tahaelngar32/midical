@@ -3,7 +3,7 @@ import { sidebarLinks } from "./ sidebar.config";
 import Link from "next/link";
 import { cn } from "@/lib/utils/cn";
 import { useLayout } from "@/context/layout-context";
-import { useActivePage } from "@/hookes/useActivePage";
+import { useActivePage } from "@/hooks/useActivePage";
 
 export const Navigation: React.FC<{}> = () => {
   const activePage = useActivePage();

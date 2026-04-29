@@ -1,17 +1,14 @@
 "use client";
 import { Tabs } from "@/components/ui/tabs";
-import { PatientHeader } from "@/features/patient/components/detailes/PatientHeader";
-import { XIcon } from "lucide-react";
+import { PatientHeader } from "@/features/patient/components/details/PatientHeader";
 import { useRouter } from "next/navigation";
-import React, { useEffect, useRef } from "react";
+import React, { useCallback, useEffect, useRef } from "react";
 
- const layout: React.FC<{ children: React.ReactNode }> = ({
-  children,
-}) => {
+const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const router = useRouter();
-  const handleClose = () => {
+  const handleClose = useCallback(() => {
     router.push("/patients");
-  };
+  }, [router]);
 
   const overlayRef = useRef<HTMLDivElement>(null);
 
@@ -45,4 +42,4 @@ import React, { useEffect, useRef } from "react";
   );
 };
 
-export default layout;
+export default Layout;

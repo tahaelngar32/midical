@@ -1,7 +1,7 @@
-import { NotificationList } from "@/features/notfication/components/NotificationList";
-import { NotificationsFilters } from "@/features/notfication/components/NotificationsFilters";
-import Stats from "@/features/notfication/components/stats";
-import { notifications } from "@/features/notfication/mock/notifications.mock";
+import { NotificationList } from "@/features/notification/components/NotificationList";
+import { NotificationsFilters } from "@/features/notification/components/NotificationsFilters";
+import Stats from "@/features/notification/components/stats";
+import { notifications } from "@/features/notification/mock/notifications.mock";
 import React from "react";
 
 const Page = () => {

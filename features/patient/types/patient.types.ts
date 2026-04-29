@@ -1,5 +1,3 @@
-import { AppointmentActionProps } from "@/features/appointments/types/appointment.types";
-
 export type PatientStatus = "active" | "inactive";
 
 export type Gender = "male" | "female";
@@ -23,7 +21,4 @@ export interface Patient {
 }
 
 export type Patients = Patient[];
-type Props = AppointmentActionProps & {
-  allowedActions?: string[];
-};
 

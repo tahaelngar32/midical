@@ -15,15 +15,6 @@ import { StatusBadge } from "@/components/ui/StatusBadge";
 import { PatientStatusConfig } from "../config/patient-status.config";
 import { Actions } from "./Actions";
 
-interface PatientRowProps {
-  name: string;
-  age: number;
-  gender: string;
-  phone: string;
-  lastVisit: string;
-  avatar?: string;
-}
-
 export const PatientRow: React.FC<{ patient: Patient }> = ({ patient }) => {
   if (!patient) return;
   const { firstName, lastName, age, gender, phone, lastVisit, avatar, status } =

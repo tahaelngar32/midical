@@ -1,9 +1,10 @@
 import { AppointmentType } from "../types/appointment.types";
 import { Video, Stethoscope, RefreshCcw } from "lucide-react";
+import type { ElementType } from "react";
 
 export type AppointmentTypeMeta = {
   label: string;
-  icon: any;
+  icon: ElementType;
 };
 
 export const appointmentTypeConfig: Record<

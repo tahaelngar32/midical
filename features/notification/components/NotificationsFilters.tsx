@@ -9,7 +9,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import useQueryParams from "@/hookes/useQueryParam";
+import useQueryParams from "@/hooks/useQueryParam";
 import { filterContainer, flexRow } from "@/lib/utils/layout";
 import React, { useEffect } from "react";
 import {

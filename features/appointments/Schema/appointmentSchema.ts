@@ -23,25 +23,31 @@ export const appointmentSchema = z
 
     date: z.string().min(1, "Date is required"),
   })
-  .refine(
-    (data) => {
-      if (data.isNewPatient) {
-        return !!data.patientName;
+  .superRefine((data, ctx) => {
+    if (data.isNewPatient) {
+      if (!data.patientName) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          message: "Patient is required",
+          path: ["patientName"],
+        });
       }
-      return !!data.patientId;
-    },
-    {
-      message: "Patient is required",
-      path: ["patientId"],
-    },
-  )
-  .refine(
-    (data) => {
-      // منع إن الاتنين يتبعتوا مع بعض (optional but recommended)
-      return !(data.patientId && data.patientName);
-    },
-    {
-      message: "Choose either existing patient or new patient",
-      path: ["patientId"],
-    },
-  );
+    } else {
+      if (!data.patientId) {
+        ctx.addIssue({
+          code: z.ZodIssueCode.custom,
+          message: "Patient is required",
+          path: ["patientId"],
+        });
+      }
+    }
+
+    // prevent both fields at the same time
+    if (data.patientId && data.patientName) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        message: "Choose either existing patient or new patient",
+        path: ["patientId", "patientName"],
+      });
+    }
+  });

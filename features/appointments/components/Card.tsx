@@ -1,13 +1,4 @@
 import React from "react";
-import {
-  Phone,
-  MessageSquare,
-  Pencil,
-  Trash2,
-  Video,
-  Clock,
-} from "lucide-react";
-
 import { Appointment } from "../types/appointment.types";
 import { Row } from "@/components/Row";
 import { AppointmentActions } from "./AppointmentActions";
@@ -23,7 +14,7 @@ interface Props {
   onStartCall?: (id: string) => void;
 }
 
-export const Card: React.FC<Props> = ({ appointment, ...actions }) => {
+export const Card: React.FC<Props> = ({ appointment }) => {
   const {
     patientName,
 

@@ -14,6 +14,7 @@ export const Actions: React.FC<{ id: string; patientName: string }> = ({
       className={flexRow()}
       role="group"
       aria-label={`Actions for ${patientName} appointment`}
+      data-appointment-id={id}
     >
       <Button
         size={"sm"}

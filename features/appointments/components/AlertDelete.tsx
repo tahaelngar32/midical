@@ -14,7 +14,7 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
-import useQueryParams from "@/hookes/useQueryParam";
+import useQueryParams from "@/hooks/useQueryParam";
 
 export function AlertDelete({ id }: { id: string }) {
   const { setQueryParams } = useQueryParams();

@@ -28,7 +28,13 @@ import DateInput from "@/components/ui/dateInput";
 
 type FormErrors = Record<string, string[]>;
 
-function FieldError({ errors, name }: { errors?: FormErrors; name: string }) {
+function FieldError({
+  errors,
+  name,
+}: {
+  errors?: FormErrors;
+  name: string;
+}) {
   const error = errors?.[name];
   return error ? <p className="text-red-500 text-sm">{error[0]}</p> : null;
 }
@@ -50,16 +56,20 @@ export function CreateNewAppointmentForm() {
 
   return (
     <div>
+      {/* Checkbox */}
       <FieldGroup className={flexRow("gap-2 py-2")}>
         <Field
           orientation="horizontal"
           className="grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 items-center"
         >
           <Checkbox
+            id="isNewPatient"
+            name="isNewPatient"
             checked={isNewPatient}
             onCheckedChange={(val) => {
               const next = !!val;
               setIsNewPatient(next);
+              // Reset selected slot when switching patient mode
               setSelected(null);
             }}
             className="mb-1 size-5"
@@ -70,18 +80,12 @@ export function CreateNewAppointmentForm() {
 
       <form action={formAction}>
         <FieldGroup className="grid grid-cols-1 sm:grid-cols-2 gap-3 py-2">
-          <input
-            type="hidden"
-            name="isNewPatient"
-            value={Number(isNewPatient)}
-          />
-          
-
+          {/* Patient Name */}
           {isNewPatient ? (
             <Field>
               <Label>Patient Name</Label>
               <Input name="patientName" placeholder="Enter patient name" />
-              <FieldError errors={errors} name="patientName" />
+              <FieldError errors={errors} name="patientId" />
             </Field>
           ) : (
             <Field>
@@ -107,6 +111,7 @@ export function CreateNewAppointmentForm() {
             </Field>
           )}
 
+          {/* Appointment Type */}
           <Field>
             <Label>Appointment Type</Label>
 
@@ -129,6 +134,7 @@ export function CreateNewAppointmentForm() {
             <FieldError errors={errors} name="appointmentType" />
           </Field>
 
+          {/* Note */}
           <Field>
             <Label>Note</Label>
             <Input name="note" placeholder="Optional note" />
@@ -136,7 +142,7 @@ export function CreateNewAppointmentForm() {
           </Field>
 
           {/* Date */}
-          <DateInput isAppointment>
+          <DateInput>
             <FieldError errors={errors} name="date" />
           </DateInput>
 
@@ -151,8 +157,10 @@ export function CreateNewAppointmentForm() {
           setSelected={setSelected}
         />
 
+        {/* slot error */}
         <FieldError errors={errors} name="from" />
 
+        {/* Footer */}
         <DialogFooter className="bg-transparent border-t-0">
           <Button type="submit" disabled={!selected} className="bg-[#4988C4]">
             Add Appointment

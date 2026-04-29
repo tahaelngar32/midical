@@ -36,6 +36,7 @@ export function generateTimeSlots(
 
   let id = 1;
 
+  // أولاً نحسب عدد السلوٹس
   const tempSlots: TimeSlotDraft[] = [];
 
   while (current < endMinutes) {
@@ -51,8 +52,10 @@ export function generateTimeSlots(
     current = next;
   }
 
+  // نحسب التلت الأخير
   const thirdStartIndex = Math.floor((tempSlots.length * 2) / 3);
 
+  // نضيف isBooked
   const finalSlots = tempSlots.map((slot, index) => ({
     ...slot,
     isBooked: index >= thirdStartIndex,

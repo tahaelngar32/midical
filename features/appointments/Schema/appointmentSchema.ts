@@ -47,7 +47,7 @@ export const appointmentSchema = z
       ctx.addIssue({
         code: z.ZodIssueCode.custom,
         message: "Choose either existing patient or new patient",
-        path: ["patientId", "patientName"],
+        path: ["patientId"],
       });
     }
   });

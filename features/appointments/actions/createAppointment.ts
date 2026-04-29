@@ -18,8 +18,9 @@ export async function createAppointment(
     isNewPatientRaw === "on" ||
     isNewPatientRaw === "1" ||
     isNewPatientRaw === "checked";
+
   const data = {
-    isNewPatient: Boolean(formData.get("isNewPatient")) || false,
+    isNewPatient,
     patientId: formData.get("patientId")?.toString() || undefined,
     patientName: formData.get("patientName")?.toString() || undefined,
     appointmentType: formData.get("appointmentType")?.toString() || "",

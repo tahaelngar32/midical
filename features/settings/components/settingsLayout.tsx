@@ -24,7 +24,7 @@ const SettingsLayout = ({ children }: { children: React.ReactNode }) => {
         description={"Manage your account settings and preferences"}
       />
       <Tabs tabs={taps} />
-      <div className="bg-white rounded-md border border-[#e5e7eb] flex flex-col gap-4 py-2">
+      <div className="bg-white rounded-md border border-[#e5e7eb] flex flex-col gap-4 p-4 ">
         <Item>
           <ItemContent>
             <ItemTitle

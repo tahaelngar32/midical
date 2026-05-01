@@ -3,6 +3,7 @@
 import { useChat } from "../hooks/useChat";
 import { useMessages } from "../hooks/useMessages";
 import { usePatients } from "../hooks/usePatients";
+import { useIsMobile } from "@/hooks/useIsMobile";
 import { ChatSidebar } from "./ChatSidebar";
 import { ChatHeader } from "./ChatHeader";
 import { MessageList } from "./MessageList";
@@ -10,6 +11,8 @@ import { ChatInput } from "./ChatInput";
 import { MessageSquare } from "lucide-react";
 
 export function ChatLayout() {
+  const isMobile = useIsMobile();
+
   const {
     chats,
     activeChatId,
@@ -21,6 +24,7 @@ export function ChatLayout() {
     setSearchQuery,
     selectChat,
     openChatWithPatient,
+    clearActiveChat,
   } = useChat();
 
   const { messages, sendMessage, scrollRef } = useMessages(activeChatId);
@@ -31,46 +35,57 @@ export function ChatLayout() {
     setSearchQuery: setPatientSearch,
   } = usePatients();
 
-  // Unified search handler per tab
   const handleSearchChange = (q: string) => {
-    if (sidebarTab === "chats") {
-      setSearchQuery(q);
-    } else {
-      setPatientSearch(q);
-    }
+    if (sidebarTab === "chats") setSearchQuery(q);
+    else setPatientSearch(q);
   };
 
   const currentSearch = sidebarTab === "chats" ? searchQuery : patientSearch;
 
-  return (
-    <div className="flex h-[90vh] rounded-md bg-white dark:bg-slate-950 overflow-hidden border border-slate-200 p-4">
-      {/* Sidebar */}
-      <ChatSidebar
-        chats={chats}
-        patients={filteredPatients}
-        activeChatId={activeChatId}
-        sidebarTab={sidebarTab}
-        searchQuery={currentSearch}
-        filteredChats={filteredChats}
-        filteredPatients={filteredPatients}
-        onSelectChat={selectChat}
-        onOpenChatWithPatient={openChatWithPatient}
-        onTabChange={setSidebarTab}
-        onSearchChange={handleSearchChange}
-      />
+  // Mobile: show sidebar OR chat (not both). Desktop: show both side-by-side.
+  const showSidebar = isMobile ? !activeChatId : true;
+  const showMain    = isMobile ? !!activeChatId : true;
 
-      {/* Main Chat Area */}
-      <main className="flex-1 flex flex-col overflow-hidden bg-white dark:bg-slate-900">
-        {activeChat ? (
-          <>
-            <ChatHeader chat={activeChat} />
-            <MessageList messages={messages} scrollRef={scrollRef} />
-            <ChatInput onSend={sendMessage} />
-          </>
-        ) : (
-          <EmptyState />
-        )}
-      </main>
+  return (
+    <div className="flex h-[90vh] bg-slate-100 dark:bg-slate-950 overflow-hidden rounded-md p-4 bg-white border border-slate-200 dark:border-slate-800">
+
+      {/* ── SIDEBAR ── */}
+      {showSidebar && (
+        <ChatSidebar
+          // full width on mobile, fixed 320px on desktop
+          className={isMobile ? "w-full" : "w-80"}
+          chats={chats}
+          patients={filteredPatients}
+          activeChatId={activeChatId}
+          sidebarTab={sidebarTab}
+          searchQuery={currentSearch}
+          filteredChats={filteredChats}
+          filteredPatients={filteredPatients}
+          onSelectChat={selectChat}
+          onOpenChatWithPatient={openChatWithPatient}
+          onTabChange={setSidebarTab}
+          onSearchChange={handleSearchChange}
+        />
+      )}
+
+      {/* ── MAIN CHAT AREA ── */}
+      {showMain && (
+        <main className="flex-1 flex flex-col overflow-hidden bg-white dark:bg-slate-900">
+          {activeChat ? (
+            <>
+              <ChatHeader
+                chat={activeChat}
+                showBackButton={!!isMobile}
+                onBack={clearActiveChat}
+              />
+              <MessageList messages={messages} scrollRef={scrollRef} />
+              <ChatInput onSend={sendMessage} />
+            </>
+          ) : (
+            <EmptyState />
+          )}
+        </main>
+      )}
     </div>
   );
 }

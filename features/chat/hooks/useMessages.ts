@@ -13,8 +13,7 @@ interface UseMessagesReturn {
 export function useMessages(chatId: string | null): UseMessagesReturn {
   // TODO: Replace with real API:
   // e.g. useQuery for fetching, useMutation for sending
-  const [messagesMap, setMessagesMap] =
-    useState<Record<string, Message[]>>(mockMessages);
+  const [messagesMap, setMessagesMap] = useState<Record<string, Message[]>>(mockMessages);
   const [isLoading] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
 
@@ -48,15 +47,14 @@ export function useMessages(chatId: string | null): UseMessagesReturn {
       }));
 
       try {
-        // TODO: Replace with real API call
-        // const sent = await api.sendMessage({ chatId, content })
-        await new Promise((res) => setTimeout(res, 600)); // simulate network
+      
+        await new Promise((res) => setTimeout(res, 600));
 
         // Mark as sent after "success"
         setMessagesMap((prev) => ({
           ...prev,
           [chatId]: (prev[chatId] ?? []).map((m) =>
-            m.id === optimisticMsg.id ? { ...m, status: "sent" as const } : m,
+            m.id === optimisticMsg.id ? { ...m, status: "sent" as const } : m
           ),
         }));
       } catch {
@@ -64,12 +62,12 @@ export function useMessages(chatId: string | null): UseMessagesReturn {
         setMessagesMap((prev) => ({
           ...prev,
           [chatId]: (prev[chatId] ?? []).map((m) =>
-            m.id === optimisticMsg.id ? { ...m, status: "failed" as const } : m,
+            m.id === optimisticMsg.id ? { ...m, status: "failed" as const } : m
           ),
         }));
       }
     },
-    [chatId],
+    [chatId]
   );
 
   return { messages, isLoading, sendMessage, scrollRef };

@@ -48,7 +48,9 @@ export default function AppointmentList() {
 
                 <ItemContent className="gap-1">
                   <ItemTitle>{appointment.name}</ItemTitle>
-                  <ItemDescription>{appointment.type}</ItemDescription>
+                  <ItemDescription className="text-[#4988C4]">
+                    {appointment.type}
+                  </ItemDescription>
                 </ItemContent>
               </Item>
             </Row.Left>

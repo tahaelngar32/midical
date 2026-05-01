@@ -6,6 +6,7 @@ import { ChatList } from "./ChatList";
 import { PatientList } from "./PatientList";
 import { Input } from "@/components/ui/input";
 import { Search, Stethoscope } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 interface ChatSidebarProps {
   chats: Chat[];
@@ -19,6 +20,8 @@ interface ChatSidebarProps {
   onOpenChatWithPatient: (patient: Patient) => void;
   onTabChange: (tab: SidebarTab) => void;
   onSearchChange: (q: string) => void;
+  /** Extra classes — used by ChatLayout to control width (e.g. w-full on mobile) */
+  className?: string;
 }
 
 export function ChatSidebar({
@@ -33,11 +36,15 @@ export function ChatSidebar({
   onOpenChatWithPatient,
   onTabChange,
   onSearchChange,
+  className,
 }: ChatSidebarProps) {
   const unreadTotal = chats.reduce((sum, c) => sum + c.unreadCount, 0);
 
   return (
-    <aside className="w-80 shrink-0 flex flex-col border-r border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 h-full">
+    <aside className={cn(
+      "shrink-0 flex flex-col border-r border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 h-full",
+      className ?? "w-80"
+    )}>
       {/* Header */}
       <div className="px-4 pt-5 pb-4 border-b border-slate-100 dark:border-slate-800">
         <div className="flex items-center gap-2 mb-4">

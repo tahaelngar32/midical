@@ -19,13 +19,13 @@ const NotificationStatsConfig: Record<
   highPriority: {
     key: "highPriority",
     label: "High Priority",
-    className: "text-[#4988C4]",
+    className: "text-[#F54900]",
     src: "/image 11.png",
   },
   today: {
     key: "today",
     label: "Today",
-    className: "text-[#4988C4]",
+    className: "text-[#155DFC]",
     src: "/image 10.png",
   },
 };

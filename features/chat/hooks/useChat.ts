@@ -13,6 +13,7 @@ interface UseChatReturn {
   setSidebarTab: (tab: SidebarTab) => void;
   selectChat: (chatId: string) => void;
   openChatWithPatient: (patient: Patient) => void;
+  clearActiveChat: () => void;
   filteredChats: Chat[];
 }
 
@@ -37,6 +38,7 @@ export function useChat(): UseChatReturn {
   const selectChat = useCallback(
     (chatId: string) => {
       setActiveChatId(chatId);
+      // Mark as read (optimistic)
       setChats((prev) =>
         prev.map((c) => (c.id === chatId ? { ...c, unreadCount: 0 } : c))
       );
@@ -46,6 +48,7 @@ export function useChat(): UseChatReturn {
 
   const openChatWithPatient = useCallback(
     (patient: Patient) => {
+      // Check if a chat already exists for this patient
       const existingChat = chats.find((c) => c.patient.id === patient.id);
 
       if (existingChat) {
@@ -74,6 +77,10 @@ export function useChat(): UseChatReturn {
     [chats]
   );
 
+  const clearActiveChat = useCallback(() => {
+    setActiveChatId(null);
+  }, []);
+
   return {
     chats,
     activeChatId,
@@ -84,6 +91,7 @@ export function useChat(): UseChatReturn {
     setSidebarTab,
     selectChat,
     openChatWithPatient,
+    clearActiveChat,
     filteredChats,
   };
 }

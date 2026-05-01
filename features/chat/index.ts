@@ -15,6 +15,7 @@ export { ChatInput } from "./components/ChatInput";
 export { useChat } from "./hooks/useChat";
 export { useMessages } from "./hooks/useMessages";
 export { usePatients } from "./hooks/usePatients";
+export { useIsMobile } from "@/hooks/useIsMobile";
 
 // Types
 export type { User, Patient, Chat, Message, MessageStatus, SidebarTab, ChatUIState, UserRole } from "./types";

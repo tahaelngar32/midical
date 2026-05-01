@@ -30,11 +30,13 @@ export default function SectionCard({
           )}
         </div>
         {action && (
-          <Button
-            className="rounded-md border border-[#d1d5db] px-4 py-2 text-sm font-medium text-[#374151] transition hover:bg-[#f9fafb]"
-            asChild
-          >
-            <Link href={action.href}>{action.label}</Link>
+          <Button variant="ghost" asChild>
+            <Link
+              href={action.href}
+              className="rounded-md border border-[#d1d5db] px-4 py-2 text-sm font-medium bg-[#4988C4] transition hover:bg-[#0080ff]! text-white! hover:text-white hover:scale-x-75 hover:scale-y-75"
+            >
+              {action.label}
+            </Link>
           </Button>
         )}
       </div>

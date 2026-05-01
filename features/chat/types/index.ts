@@ -1,4 +1,3 @@
-// ─── User & Role ─────────────────────────────────────────────────────────────
 
 export type UserRole = "doctor" | "patient";
 
@@ -12,7 +11,6 @@ export interface User {
   lastSeen?: Date;
 }
 
-// ─── Patient ──────────────────────────────────────────────────────────────────
 
 export interface Patient extends User {
   role: "patient";
@@ -22,7 +20,6 @@ export interface Patient extends User {
   email?: string;
 }
 
-// ─── Message ─────────────────────────────────────────────────────────────────
 
 export type MessageStatus = "sending" | "sent" | "delivered" | "read" | "failed";
 
@@ -41,7 +38,6 @@ export interface Message {
   };
 }
 
-// ─── Chat ─────────────────────────────────────────────────────────────────────
 
 export interface Chat {
   id: string;
@@ -54,7 +50,6 @@ export interface Chat {
   isArchived: boolean;
 }
 
-// ─── UI State ────────────────────────────────────────────────────────────────
 
 export type SidebarTab = "chats" | "patients";
 

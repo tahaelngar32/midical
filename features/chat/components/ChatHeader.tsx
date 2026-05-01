@@ -16,7 +16,6 @@ import {
 
 interface ChatHeaderProps {
   chat: Chat;
-  /** Show back arrow — used on mobile to return to the chat list */
   showBackButton?: boolean;
   onBack?: () => void;
 }

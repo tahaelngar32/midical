@@ -42,17 +42,14 @@ export function ChatLayout() {
 
   const currentSearch = sidebarTab === "chats" ? searchQuery : patientSearch;
 
-  // Mobile: show sidebar OR chat (not both). Desktop: show both side-by-side.
   const showSidebar = isMobile ? !activeChatId : true;
   const showMain    = isMobile ? !!activeChatId : true;
 
   return (
     <div className="flex h-[90vh] bg-slate-100 dark:bg-slate-950 overflow-hidden rounded-md p-4 bg-white border border-slate-200 dark:border-slate-800">
 
-      {/* ── SIDEBAR ── */}
       {showSidebar && (
         <ChatSidebar
-          // full width on mobile, fixed 320px on desktop
           className={isMobile ? "w-full" : "w-80"}
           chats={chats}
           patients={filteredPatients}
@@ -68,7 +65,6 @@ export function ChatLayout() {
         />
       )}
 
-      {/* ── MAIN CHAT AREA ── */}
       {showMain && (
         <main className="flex-1 flex flex-col overflow-hidden bg-white dark:bg-slate-900">
           {activeChat ? (

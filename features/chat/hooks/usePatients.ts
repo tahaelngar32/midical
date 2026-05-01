@@ -13,8 +13,6 @@ interface UsePatientsReturn {
 }
 
 export function usePatients(): UsePatientsReturn {
-  // TODO: Replace with real API call
-  // e.g. const { data: patients, isLoading } = useQuery({ queryKey: ['patients'], queryFn: fetchPatients })
   const [patients] = useState<Patient[]>(mockPatients);
   const [isLoading] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");

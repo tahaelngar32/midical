@@ -33,7 +33,6 @@ export function ChatListItem({ chat, isActive, onClick }: ChatListItemProps) {
         isActive && "bg-indigo-50 dark:bg-indigo-950/40 border border-indigo-100 dark:border-indigo-900"
       )}
     >
-      {/* Avatar with online indicator */}
       <div className="relative shrink-0">
         <Avatar className="h-11 w-11 ring-2 ring-white dark:ring-slate-900">
           <AvatarImage src={patient.avatarUrl} alt={patient.name} />
@@ -46,7 +45,6 @@ export function ChatListItem({ chat, isActive, onClick }: ChatListItemProps) {
         )}
       </div>
 
-      {/* Content */}
       <div className="flex-1 min-w-0">
         <div className="flex items-center justify-between mb-0.5">
           <span

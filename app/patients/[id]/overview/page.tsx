@@ -4,7 +4,6 @@ const page: React.FC<{
   params: Promise<{ id: string }>;
 }> = async ({ params }) => {
   const { id } = await params;
-  console.log(id);
   
   return (
     <div>

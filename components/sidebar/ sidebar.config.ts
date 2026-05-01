@@ -1,5 +1,6 @@
 import {
   Calendar,
+  CalendarCheck,
   File,
   LayoutDashboard,
   Pill,
@@ -11,9 +12,17 @@ export const sidebarLinks = [
   { label: "Dashboard", icon: LayoutDashboard, url: "/", active: "dashboard" },
   {
     label: "Appointments",
-    icon: Calendar,
+    icon: CalendarCheck,
+
     url: "/appointments",
     active: "appointments",
+  },
+  {
+    label: "Schedule Appointments",
+    icon: Calendar,
+
+    url: "/schedule-appointments",
+    active: "schedule-appointments",
   },
   {
     label: "Video Calls",

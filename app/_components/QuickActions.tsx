@@ -1,6 +1,6 @@
 // QuickActions.tsx
 import { Button } from "@/components/ui/button";
-import SectionCard from "./SectionCard";
+import SectionCard from "../../components/ui/SectionCard";
 
 export default function QuickActions() {
   return (

@@ -6,7 +6,12 @@ import React from "react";
 import { Button } from "../ui/button";
 
 export const HeaderMainSection: React.FC<{}> = () => {
-  const { title, toggleSidebar, isMobile } = useLayout();
+  const { activePage, toggleSidebar, isMobile } = useLayout();
+  const title = (activePage !== "_not-found"&& activePage)
+    ? activePage
+    .split("_")
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(" "):"Dashboard";
 
   return (
     <div className="flex items-center">

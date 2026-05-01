@@ -5,8 +5,7 @@ import { useIsMobile } from "@/hooks/useIsMobile";
 import { createContext, useContext, useEffect, useState } from "react";
 
 type LayoutContextType = {
-  title: string;
-  setTitle: (title: string) => void;
+  activePage: string | undefined;
   isSidebarOpen: boolean;
   isMobile: boolean;
   toggleSidebar: () => void;
@@ -16,7 +15,6 @@ const LayoutContext = createContext<LayoutContextType | null>(null);
 
 export const LayoutProvider = ({ children }: { children: React.ReactNode }) => {
   const activePage = useActivePage();
-  const [title, setTitle] = useState(activePage || "Dashboard");
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const isMobile = useIsMobile();
   useEffect(() => {
@@ -29,7 +27,7 @@ export const LayoutProvider = ({ children }: { children: React.ReactNode }) => {
 
   return (
     <LayoutContext.Provider
-      value={{ title, setTitle, isSidebarOpen, toggleSidebar, isMobile }}
+      value={{ activePage, isSidebarOpen, toggleSidebar, isMobile }}
     >
       {children}
     </LayoutContext.Provider>

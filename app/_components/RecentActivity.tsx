@@ -1,6 +1,6 @@
 // RecentActivity.tsx
 import { Row } from "@/components/Row";
-import SectionCard from "./SectionCard";
+import SectionCard from "../../components/ui/SectionCard";
 import {
   Item,
   ItemContent,

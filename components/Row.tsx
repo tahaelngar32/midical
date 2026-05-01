@@ -2,7 +2,7 @@
 
 //combist pattern
 import React from "react";
-import { cn } from "@/lib/utils/cn";
+import { cn } from "@/lib/utils";
 
 interface RowProps extends React.HTMLAttributes<HTMLElement> {
   as?: React.ElementType;

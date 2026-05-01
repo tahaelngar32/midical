@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import { useActionState } from "react";
 import { createPatient } from "@/features/patient/actions/createPatient";
 
@@ -17,68 +17,66 @@ import {
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { DialogClose, DialogFooter } from "@/components/ui/dialog";
-
-type FormState = {
-  success?: boolean;
-  errors?: Record<string, string[]>;
-} | null;
+import FormState from "@/types/form-state";
+import { toast } from "sonner";
+import useToast from "@/hooks/useSuccessToast";
+import { FieldError } from "@/components/ui/filed-error";
 
 export function CreatePatientForm() {
-  const [state, formAction] = useActionState<FormState, FormData>(
+  const [state, formAction] = useActionState<FormState | null, FormData>(
     createPatient,
     null,
   );
+  const { errors } = useToast({
+    state,
+    successMessage: "Patient has been created",
+    errorMessage: "Failed to create a patient",
+  });
 
   return (
     <form action={formAction}>
       <FieldGroup className="grid grid-cols-1 sm:grid-cols-2 gap-3 py-2">
         {/* First Name */}
-        <Field>
+        <Field data-invalid={!!errors?.firstName?.[0]}>
           <Label htmlFor="firstName">First Name</Label>
           <Input
             name="firstName"
             placeholder="Enter first name"
-            aria-invalid={state?.errors?.firstName ? true : false}
+            aria-invalid={errors?.firstName ? true : false}
           />
-          {state?.errors?.firstName && (
-            <p className="text-red-500 text-sm">{state.errors.firstName[0]}</p>
-          )}
+          <FieldError errors={errors} name="firstName" />
         </Field>
 
         {/* Last Name */}
-        <Field>
+        <Field data-invalid={!!errors?.lastName?.[0]}>
           <Label htmlFor="lastName">Last Name</Label>
           <Input
             name="lastName"
             placeholder="Enter last name"
-            aria-invalid={state?.errors?.lastName ? true : false}
+            aria-invalid={errors?.lastName ? true : false}
           />
-          {state?.errors?.lastName && (
-            <p className="text-red-500 text-sm">{state.errors.lastName[0]}</p>
-          )}
+          <FieldError errors={errors} name="lastName" />
         </Field>
 
         {/* Age */}
-        <Field>
+        <Field data-invalid={!!errors?.age?.[0]}>
           <Label htmlFor="age">Age</Label>
           <Input
             name="age"
             type="number"
             placeholder="Enter age"
-            aria-invalid={state?.errors?.age ? true : false}
+            aria-invalid={errors?.age ? true : false}
           />
-          {state?.errors?.age && (
-            <p className="text-red-500 text-sm">{state.errors.age[0]}</p>
-          )}
+          <FieldError errors={errors} name="age" />
         </Field>
 
         {/* Gender */}
-        <Field>
+        <Field data-invalid={!!errors?.gender?.[0]}>
           <Label htmlFor="gender">Gender</Label>
           <Select name="gender">
             <SelectTrigger
               className="w-full"
-              aria-invalid={state?.errors?.gender ? true : false}
+              aria-invalid={errors?.gender ? true : false}
             >
               <SelectValue placeholder="Select gender" />
             </SelectTrigger>
@@ -89,18 +87,16 @@ export function CreatePatientForm() {
               </SelectGroup>
             </SelectContent>
           </Select>
-          {state?.errors?.gender && (
-            <p className="text-red-500 text-sm">{state.errors.gender[0]}</p>
-          )}
+          <FieldError errors={errors} name="gender" />
         </Field>
 
         {/* Blood Type */}
-        <Field>
+        <Field data-invalid={!!errors?.bloodType?.[0]}>
           <Label htmlFor="bloodType">Blood Type</Label>
           <Select name="bloodType">
             <SelectTrigger
               className="w-full"
-              aria-invalid={state?.errors?.bloodType ? true : false}
+              aria-invalid={errors?.bloodType ? true : false}
             >
               <SelectValue placeholder="Select blood type" />
             </SelectTrigger>
@@ -112,62 +108,52 @@ export function CreatePatientForm() {
               </SelectGroup>
             </SelectContent>
           </Select>
-          {state?.errors?.bloodType && (
-            <p className="text-red-500 text-sm">{state.errors.bloodType[0]}</p>
-          )}
+          <FieldError errors={errors} name="bloodType" />
         </Field>
 
         {/* Phone */}
-        <Field>
+        <Field data-invalid={!!errors?.phone?.[0]}>
           <Label htmlFor="phone">Phone</Label>
           <Input
             name="phone"
             placeholder="+201 934 567890"
             type="tel"
-            aria-invalid={state?.errors?.phone ? true : false}
+            aria-invalid={errors?.phone ? true : false}
           />
-          {state?.errors?.phone && (
-            <p className="text-red-500 text-sm">{state.errors.phone[0]}</p>
-          )}
+          <FieldError errors={errors} name="phone" />
         </Field>
 
         {/* Email */}
-        <Field className="sm:col-span-2">
+        <Field className="sm:col-span-2" data-invalid={!!errors?.email?.[0]}>
           <Label htmlFor="email">Email</Label>
           <Input
-          placeholder="ali@gmail.com"
+            placeholder="ali@gmail.com"
             name="email"
             type="email"
-            aria-invalid={state?.errors?.email ? true : false}
+            aria-invalid={errors?.email ? true : false}
           />
-          {state?.errors?.email && (
-            <p className="text-red-500 text-sm">{state.errors.email[0]}</p>
-          )}
+          <FieldError errors={errors} name="email" />
         </Field>
 
         {/* Address */}
-        <Field className="sm:col-span-2">
+        <Field className="sm:col-span-2" data-invalid={!!errors?.address?.[0]}>
           <Label htmlFor="address">Address</Label>
           <Input
-          placeholder="enter your address"
+            placeholder="enter your address"
             name="address"
-            aria-invalid={state?.errors?.address ? true : false}
+            aria-invalid={errors?.address ? true : false}
           />
-          {state?.errors?.address && (
-            <p className="text-red-500 text-sm">{state.errors.address[0]}</p>
-          )}
+          <FieldError errors={errors} name="address" />
         </Field>
 
         {/* Emergency */}
-        <Field className="sm:col-span-2">
+        <Field className="sm:col-span-2" data-invalid={!!errors?.emergency?.[0]}>
           <Label htmlFor="emergency">Emergency Contact</Label>
           <Input
             name="emergency"
-            aria-invalid={state?.errors?.emergency ? true : false}
+            aria-invalid={errors?.emergency ? true : false}
           />
-          {state?.errors?.emergency && (
-            <p className="text-red-500 text-sm">{state.errors.emergency[0]}</p>
-          )}
+          <FieldError errors={errors} name="emergency" />
         </Field>
       </FieldGroup>
 

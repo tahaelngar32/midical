@@ -1,5 +1,5 @@
 import { statusConfig } from "@/features/appointments/config/appointment-status.config";
-import { cn } from "@/lib/utils/cn";
+import { cn } from "@/lib/utils";
 import { AppointmentStatus } from "../types/appointment.types";
 
 interface StatusBadgeProps {

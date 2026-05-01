@@ -2,8 +2,9 @@ import "./globals.css";
 import { LayoutProvider } from "@/context/layout-context";
 import { Josefin_Sans, Geist } from "next/font/google";
 import { Header } from "@/components/header/Header";
-import { cn } from "@/lib/utils/cn";
+import { cn } from "@/lib/utils";
 import { Sidebar } from "@/components/sidebar/Sidebar";
+import { Toaster } from "sonner";
 
 const geist = Geist({ subsets: ["latin"], variable: "--font-sans" });
 
@@ -39,6 +40,7 @@ export default function RootLayout({
             </div>{" "}
           </div>
         </LayoutProvider>
+        <Toaster />
       </body>
     </html>
   );

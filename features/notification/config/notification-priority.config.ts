@@ -1,4 +1,4 @@
-import { Badge } from "@/types.ts/Badge";
+import { Badge } from "@/types/Badge";
 import { NotificationPriority } from "../types/notifications.type";
 
 export const NotificationPriorityConfig: Record<NotificationPriority, Badge> = {

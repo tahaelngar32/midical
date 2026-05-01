@@ -1,7 +1,7 @@
-import { cn } from "./cn";
+import { cn } from "@/lib/utils";
 
 export const flexRow = (className?: string) =>
-  cn("flex items-center gap-2", className);
+  cn("flex items-center gap-2 ", className);
 export const styledList = (className?: string) =>
   cn("flex flex-col gap-4 ", className);
 export const filterContainer = (grid: string, className?: string) =>

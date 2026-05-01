@@ -2,11 +2,13 @@
 
 import { patientSchema } from "@/features/patient/Schema/patientSchema";
 import zodErrorsToObject from "@/lib/utils/zodErrorsToObject";
-type FormState = {
-  success?: boolean;
-  errors?: Record<string, string[]>;
-};
-export async function createPatient(prevState: FormState | null, formData: FormData) {
+import FormState from "@/types/form-state";
+import { nanoid } from "nanoid";
+
+export async function createPatient(
+  prevState: FormState,
+  formData: FormData,
+): Promise<FormState> {
   const data = {
     firstName: formData.get("firstName"),
     lastName: formData.get("lastName"),
@@ -22,13 +24,12 @@ export async function createPatient(prevState: FormState | null, formData: FormD
   const result = patientSchema.safeParse(data);
 
   if (!result.success) {
-    console.log(zodErrorsToObject(result.error.issues));
-
     return {
+      status: "error",
       errors: zodErrorsToObject(result.error.issues),
     };
   }
   //DB logic
-
-  return { success: true };
+  const id = nanoid();
+  return { status: "success", id };
 }

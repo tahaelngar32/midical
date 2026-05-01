@@ -1,6 +1,6 @@
 "use client";
 import { useLayout } from "@/context/layout-context";
-import { cn } from "@/lib/utils/cn";
+import { cn } from "@/lib/utils";
 import React from "react";
 import { sidebarLinks } from "./ sidebar.config";
 import { Link } from "lucide-react";
@@ -13,11 +13,11 @@ export const Sidebar: React.FC<{}> = () => {
     <aside
       className={cn(
         "overflow-hidden transition-all duration-300 flex-shrink-0 bg-white border border-[#e5e7eb] rounded-[14px] self-start h-[88vh] absolute z-10 md:relative   lg:ml-0 ",
-        isSidebarOpen ? "w-56 opacity-100" : "w-0 opacity-0",
+        isSidebarOpen ? "w-60 opacity-100" : "w-0 opacity-0",
       )}
       aria-label="Main navigation"
     >
-      <div className="max-w-56">
+      <div className="max-w-60">
         {/* Logo */}
         <Logo />
 

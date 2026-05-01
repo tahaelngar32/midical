@@ -1,5 +1,5 @@
 import { Avatar } from "@/components/Avatar";
-import SectionCard from "./SectionCard";
+import SectionCard from "../../components/ui/SectionCard";
 import { Row } from "@/components/Row";
 import {
   Item,

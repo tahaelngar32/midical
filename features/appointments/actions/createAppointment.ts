@@ -1,17 +1,13 @@
 "use server";
 
-import { appointmentSchema } from "@/features/appointments/Schema/appointmentSchema";
+import { appointmentSchema } from "@/features/appointments/Schema/appointment.schema";
 import zodErrorsToObject from "@/lib/utils/zodErrorsToObject";
-
-type FormState = {
-  success?: boolean;
-  errors?: Record<string, string[]>;
-};
-
+import FormState from "@/types/form-state";
+import { nanoid } from "nanoid";
 export async function createAppointment(
   prevState: FormState | null,
   formData: FormData,
-) {
+): Promise<FormState> {
   const isNewPatientRaw = formData.get("isNewPatient");
   const isNewPatient =
     isNewPatientRaw === "true" ||
@@ -34,13 +30,16 @@ export async function createAppointment(
 
   if (!result.success) {
     return {
+      status: "error",
       errors: zodErrorsToObject(result.error.issues),
     };
   }
 
   //call service
+  const id = nanoid();
 
   return {
-    success: true,
+    status: "success",
+    id,
   };
 }

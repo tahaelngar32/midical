@@ -1,11 +1,12 @@
 "use client";
 
-import { usePathname } from "next/navigation";
+import { useSelectedLayoutSegment } from "next/navigation";
 
-export const useActivePage = () => {
-  const pathname = usePathname();
+export const useActivePage = (defaultPage = "dashboard") => {
+  const segment = useSelectedLayoutSegment();
 
-  const lastSegment = pathname.split("/").filter(Boolean).pop()?.split("?")[0];
-
-  return lastSegment;
+  if (!segment) {
+    return defaultPage;
+  }
+  return segment;
 };

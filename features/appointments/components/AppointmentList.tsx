@@ -1,7 +1,8 @@
 import { styledList } from "@/lib/utils/layout";
 import React from "react";
 import { Appointment } from "../types/appointment.types";
-import { Card } from "./Card";
+import { AppointmentCard } from "./AppointmentCard";
+import App from "next/app";
 
 export const AppointmentList: React.FC<{ appointments: Appointment[] }> = ({
   appointments=[],
@@ -9,7 +10,7 @@ export const AppointmentList: React.FC<{ appointments: Appointment[] }> = ({
   return (
     <ul className={styledList()}>
       {appointments.map((appointment) => (
-        <Card appointment={appointment} key={appointment.id} />
+        <AppointmentCard appointment={appointment} key={appointment.id} />
       ))}
     </ul>
   );

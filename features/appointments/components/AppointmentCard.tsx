@@ -14,7 +14,7 @@ interface Props {
   onStartCall?: (id: string) => void;
 }
 
-export const Card: React.FC<Props> = ({ appointment }) => {
+export const AppointmentCard: React.FC<Props> = ({ appointment }) => {
   const {
     patientName,
 

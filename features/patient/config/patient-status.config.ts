@@ -1,4 +1,4 @@
-import { Badge } from "@/types.ts/Badge";
+import { Badge } from "@/types/Badge";
 import { PatientStatus } from "../types/patient.types";
 import { Check, RotateCcw } from "lucide-react";
 

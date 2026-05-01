@@ -1,3 +1,5 @@
+import { type ReactNode } from "react";
+import { Button } from "./button";
 import Link from "next/link";
 
 interface SectionCardProps {
@@ -7,7 +9,7 @@ interface SectionCardProps {
     label: string;
     href: string;
   };
-  children: React.ReactNode;
+  children: ReactNode;
 }
 
 export default function SectionCard({
@@ -17,7 +19,7 @@ export default function SectionCard({
   children,
 }: SectionCardProps) {
   return (
-    <section className="rounded-[14px] border border-[#e5e7eb] bg-white ">
+    <section className="rounded-[14px] border border-[#e5e7eb] bg-white">
       <div className="flex items-center justify-between gap-5 px-6 py-6 flex-wrap">
         <div>
           <h2 className="text-[20px] font-medium leading-7 text-[#111827]">
@@ -28,12 +30,12 @@ export default function SectionCard({
           )}
         </div>
         {action && (
-          <Link
-            href={action.href}
+          <Button
             className="rounded-md border border-[#d1d5db] px-4 py-2 text-sm font-medium text-[#374151] transition hover:bg-[#f9fafb]"
+            asChild
           >
-            {action.label}
-          </Link>
+            <Link href={action.href}>{action.label}</Link>
+          </Button>
         )}
       </div>
       <div className="px-6 pb-6">{children}</div>

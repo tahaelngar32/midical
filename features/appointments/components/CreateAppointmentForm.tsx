@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useActionState } from "react";
 
 import { createAppointment } from "@/features/appointments/actions/createAppointment";
@@ -25,26 +25,26 @@ import { generateTimeSlots } from "../mock/generateTimeSlots";
 import { flexRow } from "@/lib/utils/layout";
 import { TimeSlots } from "./TimeSlots";
 import DateInput from "@/components/ui/dateInput";
-
-type FormErrors = Record<string, string[]>;
-
-function FieldError({
-  errors,
-  name,
-}: {
-  errors?: FormErrors;
-  name: string;
-}) {
-  const error = errors?.[name];
-  return error ? <p className="text-red-500 text-sm">{error[0]}</p> : null;
-}
+import { FieldError } from "@/components/ui/filed-error";
+import { toast } from "sonner";
+import FormState from "@/types/form-state";
+import useToast from "@/hooks/useSuccessToast";
 
 export function CreateNewAppointmentForm() {
-  const [state, formAction] = useActionState(createAppointment, null);
+  const [state, formAction] = useActionState<FormState | null, FormData>(
+    createAppointment,
+    null,
+  );
   const [isNewPatient, setIsNewPatient] = useState(true);
   const [selected, setSelected] = useState<string | null>(null);
 
   const slots = generateTimeSlots("10:00", "14:00", 15);
+
+  const { errors } = useToast({
+    state,
+    successMessage: "An appointment has been created",
+    errorMessage: "Failed to create an appointment",
+  });
 
   const patients = [
     { id: "p1", name: "Ahmed Hassan" },
@@ -52,7 +52,6 @@ export function CreateNewAppointmentForm() {
     { id: "p3", name: "Omar Khaled" },
     { id: "p4", name: "Youssef Mahmoud" },
   ];
-  const errors = state?.errors;
 
   return (
     <div>

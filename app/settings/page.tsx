@@ -1,11 +1,5 @@
-import React from "react";
+import { redirect } from "next/navigation";
 
-const Page = () => {
-  return (
-    <div>
-      <h1>settings</h1>
-    </div>
-  );
-};
-
-export default Page;
+export default function Page() {
+  redirect("/settings/profile");
+}

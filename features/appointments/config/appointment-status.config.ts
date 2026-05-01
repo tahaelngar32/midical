@@ -1,6 +1,6 @@
 import { CheckCircle, Clock, Hourglass, Loader } from "lucide-react";
 import { AppointmentStatus } from "../types/appointment.types";
-import { Badge } from "@/types.ts/Badge";
+import { Badge } from "@/types/Badge";
 
 const statusStyles = {
   warning: "bg-[#fef3c7] text-[#b45309]",

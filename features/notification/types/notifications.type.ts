@@ -33,3 +33,9 @@ export interface NotificationFilterOption {
   value: NotificationFilter;
   label: string;
 }
+export type NotificationSetting = {
+  key: string;
+  title: string;
+  description: string;
+  isActive: boolean;
+};

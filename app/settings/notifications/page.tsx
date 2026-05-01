@@ -1,11 +1,12 @@
-import React from 'react';
+import NotificationSettings from "@/features/notification/components/NotificationSettings";
+import React from "react";
 
 const Page = () => {
-    return (
-        <div>
-            notifications settings
-        </div>
-    );
-}
+  return (
+    <>
+      <NotificationSettings />
+    </>
+  );
+};
 
 export default Page;

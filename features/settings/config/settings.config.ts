@@ -16,7 +16,7 @@ export const SETTINGS_PAGES: Record<string, NavItem> = {
     icon: User,
     link: "/settings/profile",
   },
-  notification: {
+  notifications: {
     key: "notification",
     label: "Notifications",
     description: "Control how and when you receive notifications",

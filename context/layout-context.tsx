@@ -7,7 +7,7 @@ import { createContext, useContext, useEffect, useState } from "react";
 type LayoutContextType = {
   activePage: string | undefined;
   isSidebarOpen: boolean;
-  isMobile: boolean;
+  isMobile: boolean | undefined;
   toggleSidebar: () => void;
 };
 
@@ -19,7 +19,10 @@ export const LayoutProvider = ({ children }: { children: React.ReactNode }) => {
   const isMobile = useIsMobile();
   useEffect(() => {
     setIsSidebarOpen(!isMobile);
-  }, [isMobile]);
+    if (!isMobile && activePage === "chat") {
+      setIsSidebarOpen(false);
+    }
+  }, [isMobile, activePage]);
 
   const toggleSidebar = () => {
     setIsSidebarOpen((prev) => !prev);

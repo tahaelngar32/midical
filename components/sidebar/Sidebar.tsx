@@ -8,12 +8,14 @@ import { Logo } from "./Logo";
 import { Navigation } from "./Navigation";
 
 export const Sidebar: React.FC<{}> = () => {
-  const { isSidebarOpen, isMobile } = useLayout();
+  const { isSidebarOpen, isMobile, activePage } = useLayout();
+
   return (
     <aside
       className={cn(
         "overflow-hidden transition-all duration-300 flex-shrink-0 bg-white border border-[#e5e7eb] rounded-[14px] self-start h-[88vh] absolute z-10 md:relative   lg:ml-0 ",
         isSidebarOpen ? "w-60 opacity-100" : "w-0 opacity-0",
+        activePage === "chats" && "relative",
       )}
       aria-label="Main navigation"
     >

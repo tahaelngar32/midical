@@ -16,7 +16,6 @@ import { ActionButton } from "@/components/ActionButton";
 
 import { CreatePatientForm } from "./CreatePatientForm";
 
-import React from 'react'
 
 
 export function PatientHeader() {

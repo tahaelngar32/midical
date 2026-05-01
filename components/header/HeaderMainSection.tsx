@@ -7,16 +7,17 @@ import { Button } from "../ui/button";
 
 export const HeaderMainSection: React.FC<{}> = () => {
   const { activePage, toggleSidebar, isMobile } = useLayout();
-  const title = (activePage !== "_not-found"&& activePage)
-    ? activePage
-    .split("_")
-    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-    .join(" "):"Dashboard";
-
+  const title =
+    activePage !== "_not-found" && activePage
+      ? activePage
+          .split("_")
+          .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+          .join(" ")
+      : "Dashboard";
   return (
     <div className="flex items-center">
       <Button
-        className={cn(isMobile ? "block" : "hidden")}
+        className={cn((isMobile || activePage) === "chat" ? "block" : "hidden")}
         size={"icon-lg"}
         variant={"ghost"}
         aria-label="Toggle navigation menu"

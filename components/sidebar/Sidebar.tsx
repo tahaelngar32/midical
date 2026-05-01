@@ -2,7 +2,7 @@
 import { useLayout } from "@/context/layout-context";
 import { cn } from "@/lib/utils";
 import React from "react";
-import { sidebarLinks } from "./ sidebar.config";
+import { sidebarLinks } from "./sidebar.config";
 import { Link } from "lucide-react";
 import { Logo } from "./Logo";
 import { Navigation } from "./Navigation";

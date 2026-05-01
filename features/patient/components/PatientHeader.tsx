@@ -35,9 +35,7 @@ export function PatientHeader() {
         }
       />
 
-      {/* Dialog Container (زي الـ modal بتاع HTML عندك) */}
       <DialogContent className="sm:max-w-[600px] max-h-[90vh] overflow-auto rounded-xl px-4 py-5 sm:px-10 sm:py-9">
-        {/* Header */}
         <DialogHeader className="gap-0">
           <DialogTitle className="text-lg font-semibold">
             Add New Patient

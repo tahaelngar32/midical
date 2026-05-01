@@ -1,33 +1,21 @@
-import { sidebarLinks } from "./ sidebar.config";
+"use client";
+
+import { useEffect, useRef } from "react";
+import { sidebarLinks } from "./sidebar.config";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { useActivePage } from "@/hooks/useActivePage";
+import gsap from "gsap";
+import { useListAnimation } from "@/hooks/useListAnimation";
+import SidebarItem from "./SidebarItem";
 
-export const Navigation: React.FC<{}> = () => {
-  const activePage = useActivePage();
-  
-
+export const Navigation: React.FC = () => {
+  const { listRef } = useListAnimation();
   return (
     <nav aria-label="Sidebar navigation">
-      <ul className="flex flex-col gap-1 px-3 py-3 list-none">
+      <ul ref={listRef} className="flex flex-col gap-1 px-3 py-3 list-none">
         {sidebarLinks.map((item) => {
-          const { icon: Icon } = item;
-          return (
-            <li key={item.active}>
-              <Link
-                href={item.url || "#"}
-                className={cn(
-                  "flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium transition",
-                  activePage === item.active
-                    ? "text-[#4988C4] bg-blue-50 border-r-2 border-[#4988C4]"
-                    : "text-gray-600 hover:bg-gray-50 hover:text-gray-900",
-                )}
-              >
-                <Icon className="w-5 h-5" />
-                {item.label}
-              </Link>
-            </li>
-          );
+          return <SidebarItem key={item.active} item={item} />;
         })}
       </ul>
     </nav>

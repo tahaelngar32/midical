@@ -1,7 +1,8 @@
+import { ProfileSettingsPage } from "@/features/doctor-profile";
 import React from "react";
 
 const Page = () => {
-  return <div>profile</div>;
+  return <ProfileSettingsPage />;
 };
 
 export default Page;

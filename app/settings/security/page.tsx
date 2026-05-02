@@ -1,7 +1,7 @@
-import { ActiveSessionsSection } from "@/features/settings/security/components/ActiveSessionsSection";
-import { LoginHistorySection } from "@/features/settings/security/components/LoginHistorySection";
-import { PasswordSection } from "@/features/settings/security/components/PasswordSection";
-import { TwoFactorSection } from "@/features/settings/security/components/TwoFactorSection";
+import { ActiveSessionsSection } from "@/features/security/components/ActiveSessionsSection";
+import { LoginHistorySection } from "@/features/security/components/LoginHistorySection";
+import { PasswordSection } from "@/features/security/components/PasswordSection";
+import { TwoFactorSection } from "@/features/security/components/TwoFactorSection";
 import React from "react";
 
 const Page = () => {

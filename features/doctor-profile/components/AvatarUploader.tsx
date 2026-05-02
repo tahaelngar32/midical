@@ -5,7 +5,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Camera, Trash2, Upload } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { getInitialsName } from "@/lib/utils/getInitialsName";
+import { getInitialsName } from "@/lib/utils/getIntilesname";
 
 interface AvatarUploaderProps {
   name: string;
